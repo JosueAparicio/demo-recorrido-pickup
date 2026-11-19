@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0b0d">
 <title>Pickup 4x4 2023 — Recorrido</title>
+<meta name="description" content="Recorrido de una pickup 4x4 doble cabina 2023: desde afuera, al volante y de regreso. Demo de micrositio para concesionarios y rentadoras en El Salvador.">
+<meta property="og:image" content="img/01-se-acerca.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -33,15 +35,20 @@
   @keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(12px)}}
 
   /* ---------- Scroll tour ---------- */
-  .tour{position:relative;height:720vh}
+  .tour{position:relative;height:1100vh}
   .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#000}
   .scene{position:absolute;inset:0;opacity:0;will-change:opacity}
   .layer{position:absolute;inset:-2%;width:104%;height:104%;will-change:transform;transform-origin:50% 60%}
-  .layer svg,.layer img{width:100%;height:100%;display:block;object-fit:cover}
+  .layer img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+  .layer .fondo{display:none}
+  @media (min-aspect-ratio:4/5){
+    .layer .fondo{display:block;filter:blur(38px) brightness(.45);transform:scale(1.15)}
+    .layer .foto{object-fit:contain;object-position:78% 50%}
+  }
   .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.65) 100%)}
   .flash{position:absolute;inset:0;background:#fff6e0;opacity:0;pointer-events:none}
 
-  .cap{position:absolute;left:22px;right:22px;bottom:12vh;max-width:560px;opacity:0;transform:translateY(24px);will-change:opacity,transform;text-shadow:0 2px 24px rgba(0,0,0,.7)}
+  .cap{position:absolute;left:22px;right:22px;bottom:12vh;max-width:520px;opacity:0;will-change:opacity,translate;text-shadow:0 2px 24px rgba(0,0,0,.7)}
   .cap .n{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#ffd2a8;margin-bottom:10px}
   .cap h2{font-size:clamp(36px,7vw,72px);line-height:1}
   .cap p{font-size:18px;line-height:1.5;color:#ece6dd;margin:14px 0 0}
@@ -52,6 +59,7 @@
   .chapters span.on{color:#fff}
   .chapters span.on::after{background:var(--accent);transform:scale(1.4)}
   @media (max-width:640px){.chapters span{font-size:0;gap:0}}
+  @media (min-aspect-ratio:4/5){.cap{left:6vw;bottom:auto;top:50%;transform:translateY(-50%)}}
   .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);width:0;z-index:5}
 
   /* ---------- After tour ---------- */
@@ -99,65 +107,16 @@
   <div class="hint"><span class="mouse" aria-hidden="true"></span> Desliza para manejarla</div>
 </header>
 
-<!-- TOUR -->
+<!-- TOUR: una sola toma, 9 fotos -->
 <div class="tour" id="tour">
   <div class="stage">
 
-    <!-- 1. AFUERA: el carro se acerca -->
-    <div class="scene" data-scene="0">
-      <div class="layer" data-depth="0.18" data-y="-40">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="s1sky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#141a33"/><stop offset=".55" stop-color="#6b3a4a"/><stop offset=".8" stop-color="#e0763a"/><stop offset="1" stop-color="#f4b26a"/>
-            </linearGradient>
-          </defs>
-          <rect width="1600" height="900" fill="url(#s1sky)"/>
-          <circle cx="800" cy="585" r="110" fill="#ffcf8a" opacity=".85"/>
-          <path d="M0 610 L300 590 L560 430 Q690 360 780 380 Q840 392 900 470 L1120 570 L1600 585 L1600 900 L0 900Z" fill="#2a1d2b"/>
-          <path d="M0 640 L420 615 L700 600 L1000 610 L1600 625 L1600 900 L0 900Z" fill="#1a141c"/>
-        </svg>
-      </div>
-      <div class="layer" data-depth="0.5" style="transform-origin:50% 66%">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <polygon points="770,640 830,640 1500,900 100,900" fill="#232228"/>
-          <polygon points="770,640 776,640 220,900 160,900" fill="#3a3840"/>
-          <polygon points="824,640 830,640 1440,900 1380,900" fill="#3a3840"/>
-          <line class="dash" x1="800" y1="640" x2="800" y2="900" stroke="#f2e2bf" stroke-width="10" stroke-dasharray="26 34"/>
-        </svg>
-      </div>
-      <div class="layer car" data-depth="2.6" style="transform-origin:50% 72%">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <radialGradient id="glow"><stop offset="0" stop-color="#fff6dc"/><stop offset=".35" stop-color="#ffe2a0" stop-opacity=".6"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
-            <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a6270"/><stop offset="1" stop-color="#2c3038"/></linearGradient>
-          </defs>
-          <g transform="translate(800 690) scale(.42) translate(-800 -690)">
-            <ellipse cx="800" cy="712" rx="230" ry="20" fill="#000" opacity=".55"/>
-            <rect x="610" y="630" width="56" height="80" rx="12" fill="#0b0b0d"/>
-            <rect x="934" y="630" width="56" height="80" rx="12" fill="#0b0b0d"/>
-            <path d="M650 590 L700 500 L900 500 L950 590Z" fill="#4c5462"/>
-            <path d="M684 582 L722 516 L878 516 L916 582Z" fill="#141c29"/>
-            <path d="M700 575 L735 525 L780 525 L745 575Z" fill="#ffffff" opacity=".08"/>
-            <rect x="592" y="572" width="34" height="20" rx="5" fill="#2c3038"/>
-            <rect x="974" y="572" width="34" height="20" rx="5" fill="#2c3038"/>
-            <rect x="596" y="584" width="408" height="100" rx="24" fill="url(#body)"/>
-            <rect x="712" y="602" width="176" height="52" rx="8" fill="#131518"/>
-            <g stroke="#2b2e34" stroke-width="5"><line x1="716" y1="615" x2="884" y2="615"/><line x1="716" y1="628" x2="884" y2="628"/><line x1="716" y1="641" x2="884" y2="641"/></g>
-            <rect x="618" y="602" width="82" height="26" rx="9" fill="#fff4d8"/>
-            <rect x="900" y="602" width="82" height="26" rx="9" fill="#fff4d8"/>
-            <rect x="606" y="656" width="388" height="30" rx="10" fill="#1f2228"/>
-            <rect x="640" y="664" width="34" height="10" rx="4" fill="#e8833a" opacity=".8"/>
-            <rect x="926" y="664" width="34" height="10" rx="4" fill="#e8833a" opacity=".8"/>
-            <g class="beams" opacity=".55">
-              <circle cx="659" cy="615" r="120" fill="url(#glow)"/>
-              <circle cx="941" cy="615" r="120" fill="url(#glow)"/>
-            </g>
-          </g>
-        </svg>
+    <div class="scene" data-scene="0" data-chapter="afuera">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/01-se-acerca.jpg" alt="" aria-hidden="true" fetchpriority="high">
+        <img class="foto" src="img/01-se-acerca.jpg" alt="La pickup gris acercándose por una carretera de curvas con el volcán al atardecer" fetchpriority="high">
       </div>
       <div class="vignette"></div>
-      <div class="flash" data-flash></div>
       <div class="cap">
         <div class="n">01 · Afuera</div>
         <h2>Se ve venir desde lejos.</h2>
@@ -165,84 +124,88 @@
       </div>
     </div>
 
-    <!-- 2. AL VOLANTE: adentro, manejando -->
-    <div class="scene" data-scene="1">
-      <div class="layer" data-depth="0.45" style="transform-origin:50% 52%">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="s2sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fa9d6"/><stop offset=".7" stop-color="#cfe3ee"/><stop offset="1" stop-color="#f3e6cc"/></linearGradient>
-          </defs>
-          <rect width="1600" height="900" fill="url(#s2sky)"/>
-          <path d="M180 470 L520 300 Q610 250 680 270 L860 410 L1060 440 L1300 400 L1500 470Z" fill="#6a7d93"/>
-          <path d="M0 480 L1600 480 L1600 900 L0 900Z" fill="#5c7a3d"/>
-          <polygon points="790,478 810,478 1350,900 250,900" fill="#3a3a3f"/>
-          <line class="dash" x1="800" y1="480" x2="800" y2="900" stroke="#f5ebd2" stroke-width="12" stroke-dasharray="30 46"/>
-          <g fill="#2f4a22">
-            <path d="M330 480 L340 330 L350 480Z"/><path d="M340 335 Q290 300 250 320 Q300 315 340 345Z"/><path d="M340 335 Q390 295 440 310 Q385 315 340 345Z"/><path d="M340 335 Q330 280 300 260 Q335 290 344 340Z"/>
-            <path d="M1250 480 L1262 350 L1274 480Z"/><path d="M1262 355 Q1210 325 1170 340 Q1222 338 1262 365Z"/><path d="M1262 355 Q1312 318 1360 332 Q1306 338 1262 365Z"/>
-          </g>
-        </svg>
-      </div>
-      <div class="layer" data-depth="0.1" style="transform-origin:50% 70%">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <path fill-rule="evenodd" fill="#0e0f12" d="M-50 -50 H1650 V950 H-50Z M250 110 Q800 50 1350 110 L1470 560 Q800 600 130 560Z"/>
-          <path d="M250 110 Q800 50 1350 110" stroke="#1d1f24" stroke-width="18" fill="none"/>
-          <rect x="770" y="96" width="70" height="26" rx="8" fill="#16171b"/>
-          <path d="M-50 575 Q800 520 1650 575 L1650 950 L-50 950Z" fill="#17181c"/>
-          <path d="M-50 575 Q800 520 1650 575" stroke="#24262b" stroke-width="6" fill="none"/>
-          <rect x="1010" y="610" width="320" height="180" rx="16" fill="#0a1522" stroke="#2c4a6a" stroke-width="3"/>
-          <rect x="1030" y="630" width="180" height="140" rx="10" fill="#12283d"/>
-          <path d="M1040 740 L1080 700 L1120 720 L1170 660 L1200 680" stroke="#5fb0ff" stroke-width="5" fill="none"/>
-          <circle cx="1170" cy="660" r="8" fill="#e8833a"/>
-          <rect x="1222" y="630" width="90" height="40" rx="8" fill="#1b3550"/>
-          <rect x="1222" y="680" width="90" height="40" rx="8" fill="#1b3550"/>
-          <rect x="1222" y="730" width="90" height="40" rx="8" fill="#1b3550"/>
-          <circle cx="440" cy="640" r="38" fill="none" stroke="#e8833a" stroke-width="4" opacity=".8"/>
-          <circle cx="600" cy="640" r="38" fill="none" stroke="#e8833a" stroke-width="4" opacity=".8"/>
-          <circle cx="520" cy="900" r="250" fill="none" stroke="#08080a" stroke-width="54"/>
-          <path d="M290 860 Q520 790 750 860" stroke="#08080a" stroke-width="46" fill="none"/>
-          <circle cx="520" cy="880" r="70" fill="#1b1c21"/>
-          <circle cx="520" cy="880" r="22" fill="#2a2c32"/>
-        </svg>
+    <div class="scene" data-scene="1" data-chapter="afuera">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/02-frente.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/02-frente.jpg" alt="Frente de la pickup de cerca, con los faros LED encendidos" decoding="async">
       </div>
       <div class="vignette"></div>
       <div class="cap">
-        <div class="n">02 · Al volante</div>
-        <h2>Ya estás adentro.</h2>
-        <p>Pantalla táctil con Apple CarPlay y Android Auto, cámara de retroceso y espacio de verdad para cinco adultos en un viaje largo.</p>
+        <div class="n">01 · Afuera</div>
+        <h2>De frente, sin pena.</h2>
+        <p>Parrilla cromada y faros LED que te traen de regreso de la playa aunque ya sea de noche.</p>
       </div>
     </div>
 
-    <!-- 3. ATRÁS: playa, palangana -->
-    <div class="scene" data-scene="2">
-      <div class="layer" data-depth="0.22" data-y="-30">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="s3sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2a52"/><stop offset=".5" stop-color="#d4677a"/><stop offset=".85" stop-color="#f5a35f"/></linearGradient>
-            <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a5c86"/><stop offset="1" stop-color="#1d2a45"/></linearGradient>
-          </defs>
-          <rect width="1600" height="900" fill="url(#s3sky)"/>
-          <circle cx="1060" cy="440" r="80" fill="#ffd08a"/>
-          <rect y="450" width="1600" height="450" fill="url(#sea)"/>
-          <g fill="#ffd08a" opacity=".55"><rect x="1010" y="470" width="100" height="6" rx="3"/><rect x="1030" y="495" width="60" height="5" rx="3"/><rect x="1000" y="525" width="120" height="5" rx="3"/></g>
-          <path d="M430 452 Q450 330 520 320 Q590 330 600 452Z" fill="#1d1622"/>
-          <path d="M0 452 L180 380 L300 452Z" fill="#1d1622"/>
-        </svg>
+    <div class="scene" data-scene="2" data-chapter="afuera">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/03-lateral.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/03-lateral.jpg" alt="Lateral trasero de la pickup estacionada en la carretera, con el volcán al fondo" decoding="async">
       </div>
-      <div class="layer" data-depth="0.7" style="transform-origin:50% 100%">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <path d="M260 900 L470 610 L1130 610 L1340 900Z" fill="#1e2126"/>
-          <path d="M470 610 L1130 610 L1110 570 L490 570Z" fill="#2c3038"/>
-          <path d="M260 900 L470 610 L440 600 L200 900Z" fill="#3a404b"/>
-          <path d="M1340 900 L1130 610 L1160 600 L1400 900Z" fill="#3a404b"/>
-          <g stroke="#15171b" stroke-width="6"><line x1="560" y1="900" x2="640" y2="610"/><line x1="800" y1="900" x2="800" y2="610"/><line x1="1040" y1="900" x2="960" y2="610"/></g>
-          <g transform="rotate(-10 700 740)"><ellipse cx="700" cy="740" rx="70" ry="250" fill="#eadfc8"/><line x1="700" y1="510" x2="700" y2="970" stroke="#e8833a" stroke-width="6"/></g>
-          <g transform="rotate(8 880 760)"><ellipse cx="880" cy="760" rx="62" ry="230" fill="#e8833a"/><line x1="880" y1="550" x2="880" y2="970" stroke="#fff3df" stroke-width="5"/></g>
-          <rect x="1000" y="700" width="170" height="120" rx="14" fill="#2f7fbf"/>
-          <rect x="1000" y="700" width="170" height="36" rx="12" fill="#f2efea"/>
-          <rect x="1050" y="690" width="70" height="14" rx="6" fill="#d8d3c9"/>
-          <path d="M180 900 L1420 900 L1440 860 L160 860Z" fill="#4b525e"/>
-        </svg>
+      <div class="vignette"></div>
+      <div class="cap">
+        <div class="n">01 · Afuera</div>
+        <h2>Doble cabina, de verdad.</h2>
+        <p>Cuatro puertas, estribos laterales y rines con llantas que todavía tienen vida de sobra.</p>
+      </div>
+    </div>
+
+    <div class="scene" data-scene="3" data-chapter="adentro">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/04-puerta.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/04-puerta.jpg" alt="Puerta del conductor abierta mostrando los asientos de cuero" decoding="async">
+      </div>
+      <div class="vignette"></div>
+      <div class="cap">
+        <div class="n">02 · Adentro</div>
+        <h2>Abrí la puerta.</h2>
+        <p>Asientos de cuero y una entrada cómoda, aunque vengas con las manos llenas.</p>
+      </div>
+    </div>
+
+    <div class="scene" data-scene="4" data-chapter="adentro">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/05-al-volante.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/05-al-volante.jpg" alt="Vista desde el asiento del conductor hacia la carretera y el volcán" decoding="async">
+      </div>
+      <div class="vignette"></div>
+      <div class="cap">
+        <div class="n">02 · Adentro</div>
+        <h2>Ya estás al volante.</h2>
+        <p>Volante con controles, tablero digital y la carretera adelante. Así se siente manejarla.</p>
+      </div>
+    </div>
+
+    <div class="scene" data-scene="5" data-chapter="adentro">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/06-tablero.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/06-tablero.jpg" alt="Tablero con la pantalla táctil mostrando un mapa y la palanca automática" decoding="async">
+      </div>
+      <div class="vignette"></div>
+      <div class="cap">
+        <div class="n">02 · Adentro</div>
+        <h2>Todo en la pantalla.</h2>
+        <p>Apple CarPlay y Android Auto, cámara de retroceso y sensores de parqueo.</p>
+      </div>
+    </div>
+
+    <div class="scene" data-scene="6" data-chapter="adentro">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/07-asientos-traseros.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/07-asientos-traseros.jpg" alt="Asientos traseros de cuero con la luz de la tarde entrando por la ventana" decoding="async">
+      </div>
+      <div class="vignette"></div>
+      <div class="cap">
+        <div class="n">02 · Adentro</div>
+        <h2>Atrás también se viaja cómodo.</h2>
+        <p>Cinco adultos sin apretarse, con salidas de aire atrás para los viajes largos.</p>
+      </div>
+    </div>
+
+    <div class="scene" data-scene="7" data-chapter="atras">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/08-palangana.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/08-palangana.jpg" alt="La pickup vista desde atrás, con la palangana, en la carretera hacia el volcán" decoding="async">
       </div>
       <div class="vignette"></div>
       <div class="cap">
@@ -252,34 +215,10 @@
       </div>
     </div>
 
-    <!-- 4. LLEGADA: noche, cierre -->
-    <div class="scene" data-scene="3">
-      <div class="layer" data-depth="0.15">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <rect width="1600" height="900" fill="#0a0d18"/>
-          <g fill="#fff" opacity=".7"><circle cx="200" cy="120" r="2"/><circle cx="420" cy="200" r="1.6"/><circle cx="640" cy="90" r="2.2"/><circle cx="980" cy="160" r="1.6"/><circle cx="1220" cy="80" r="2"/><circle cx="1420" cy="210" r="1.8"/><circle cx="1100" cy="260" r="1.4"/><circle cx="300" cy="300" r="1.4"/></g>
-          <path d="M0 560 L240 500 L420 430 Q520 380 600 420 L820 520 L1600 540 L1600 900 L0 900Z" fill="#141826"/>
-          <g fill="#ffcf7a"><circle cx="560" cy="520" r="3"/><circle cx="610" cy="530" r="3"/><circle cx="680" cy="525" r="2.5"/><circle cx="1180" cy="545" r="3"/><circle cx="1240" cy="548" r="2.5"/><circle cx="1320" cy="546" r="3"/></g>
-          <rect y="600" width="1600" height="300" fill="#0d0f16"/>
-        </svg>
-      </div>
-      <div class="layer" data-depth="0.35" style="transform-origin:50% 75%">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs><radialGradient id="red"><stop offset="0" stop-color="#ff5a4a"/><stop offset="1" stop-color="#ff2a1a" stop-opacity="0"/></radialGradient></defs>
-          <ellipse cx="800" cy="760" rx="330" ry="26" fill="#000" opacity=".6"/>
-          <rect x="520" y="680" width="80" height="90" rx="14" fill="#050507"/>
-          <rect x="1000" y="680" width="80" height="90" rx="14" fill="#050507"/>
-          <path d="M600 560 L650 450 L950 450 L1000 560Z" fill="#20242c"/>
-          <path d="M640 552 L680 470 L920 470 L960 552Z" fill="#0b0f17"/>
-          <rect x="500" y="550" width="600" height="160" rx="26" fill="#2a2f38"/>
-          <rect x="560" y="590" width="480" height="70" rx="10" fill="#1d2128"/>
-          <rect x="515" y="575" width="70" height="40" rx="10" fill="#ff4a3a"/>
-          <rect x="1015" y="575" width="70" height="40" rx="10" fill="#ff4a3a"/>
-          <circle cx="550" cy="595" r="110" fill="url(#red)" opacity=".5"/>
-          <circle cx="1050" cy="595" r="110" fill="url(#red)" opacity=".5"/>
-          <rect x="740" y="612" width="120" height="30" rx="4" fill="#d9d4c8"/>
-          <rect x="510" y="690" width="580" height="34" rx="10" fill="#15181e"/>
-        </svg>
+    <div class="scene" data-scene="8" data-chapter="regreso">
+      <div class="layer" data-depth="0.07">
+        <img class="fondo" src="img/09-se-va.jpg" alt="" aria-hidden="true" decoding="async">
+        <img class="foto" src="img/09-se-va.jpg" alt="La pickup alejándose por una curva de la carretera al atardecer, con el volcán de fondo" decoding="async">
       </div>
       <div class="vignette"></div>
       <div class="cap">
@@ -290,7 +229,7 @@
     </div>
 
     <div class="chapters" aria-hidden="true">
-      <span>Afuera</span><span>Al volante</span><span>Atrás</span><span>De regreso</span>
+      <span data-chapter="afuera">Afuera</span><span data-chapter="adentro">Adentro</span><span data-chapter="atras">Atrás</span><span data-chapter="regreso">De regreso</span>
     </div>
     <div class="progress"></div>
   </div>
@@ -355,6 +294,9 @@
   document.querySelectorAll('[data-mode]').forEach(function(b){ b.addEventListener('click', function(){ setMode(b.dataset.mode); }); });
   setMode('venta');
 
+  // Precarga y decodifica todas las fotos del recorrido para que no aparezcan en negro al deslizar rápido
+  document.querySelectorAll(".scene img.foto").forEach(function(img){ var im = new Image(); im.src = img.currentSrc || img.src; if (im.decode) im.decode().catch(function(){}); });
+
   // ====== Motor del recorrido ======
   var tour = document.getElementById('tour');
   var scenes = [].slice.call(document.querySelectorAll('.scene'));
@@ -362,7 +304,7 @@
   var bar = document.querySelector('.progress');
   var floatBtn = document.querySelector('.float');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var n = scenes.length, F = 0.05; // ancho del fundido entre escenas
+  var n = scenes.length, F = 0.022; // ancho del fundido entre escenas
   function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
   function ease(t){ return t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
 
@@ -396,9 +338,9 @@
         var cap = s.querySelector('.cap');
         var c = Math.min(clamp((t - .12) / .15), i === n-1 ? 1 : clamp((.88 - t) / .12));
         cap.style.opacity = c;
-        cap.style.transform = 'translateY(' + ((1-c)*24) + 'px)';
+        cap.style.translate = '0 ' + ((1-c)*24) + 'px';
       }
-      if (chapters[i]) chapters[i].classList.toggle('on', p >= a && p < b || (i===n-1 && p>=1));
+      if ((p >= a && p < b) || (i === n-1 && p >= 1)) chapters.forEach(function(c){ c.classList.toggle('on', c.dataset.chapter === s.dataset.chapter); });
     });
   }
   function onScroll(){ if (!ticking) { ticking = true; requestAnimationFrame(update); } }
