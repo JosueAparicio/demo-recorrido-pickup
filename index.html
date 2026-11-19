@@ -5,76 +5,87 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0b0d">
 <title>Pickup 4x4 2023 — Recorrido</title>
-<meta name="description" content="Recorrido de una pickup 4x4 doble cabina 2023: desde afuera, al volante y de regreso. Demo de micrositio para concesionarios y rentadoras en El Salvador.">
+<meta name="description" content="Recorrido en video de una pickup 4x4 doble cabina 2023: desde afuera, al volante y de regreso. Demo de micrositio para concesionarios y rentadoras en El Salvador.">
 <meta property="og:title" content="Pickup 4x4 2023 — Recorrido">
-<meta property="og:image" content="img/01-se-acerca.jpg">
-<link rel="preload" as="image" href="img/01-se-acerca.jpg">
+<meta property="og:image" content="video/01-se-acerca.jpg">
+<link rel="preload" as="image" href="video/01-se-acerca.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0b0b0d;--ink:#f2efea;--mute:#b5afa6;--line:#2a2b30;--accent:#e8833a}
+  :root{--bg:#0b0b0d;--ink:#f4f1ec;--mute:#b5afa6;--line:#2a2b30;--accent:#e8833a;--warm:#ffd2a8}
   *{box-sizing:border-box}
+  html{scroll-snap-type:y proximity}
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  h1,h2,h3{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em;margin:0}
+  h1,h2{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em;margin:0}
 
-  /* ---------- Top bar ---------- */
-  .bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;pointer-events:none}
+  /* ---------- Barra ---------- */
+  .bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;pointer-events:none}
   .bar > *{pointer-events:auto}
-  .brand{font-family:"Space Grotesk";font-weight:700;letter-spacing:.1em;font-size:15px;text-shadow:0 1px 12px rgba(0,0,0,.6)}
-  .mode{display:flex;background:rgba(20,20,24,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px}
-  .mode button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--mute);min-height:20px}
+  .brand{font-family:"Space Grotesk";font-weight:700;letter-spacing:.12em;font-size:15px;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+  .mode{display:flex;background:rgba(20,20,24,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:4px}
+  .mode button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--mute)}
   .mode button[aria-pressed="true"]{background:var(--ink);color:#0b0b0d}
+  .mode button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-  /* ---------- Intro ---------- */
-  .intro{height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 22px 12vh;position:relative;overflow:hidden;background:linear-gradient(to top,#0b0b0d 8%,rgba(11,11,13,.72) 42%,rgba(11,11,13,.25) 100%),url(img/01-se-acerca.jpg) 50% 30%/cover no-repeat}
-  @media (min-aspect-ratio:4/5){.intro{padding-left:6vw;background:linear-gradient(to right,#0b0b0d 18%,rgba(11,11,13,.55) 60%,rgba(11,11,13,.35) 100%),url(img/01-se-acerca.jpg) 50% 38%/cover no-repeat}}
-  .intro .tag{font-size:13px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
-  .intro h1{font-size:clamp(46px,11vw,120px);line-height:.95}
-  .intro p{color:var(--mute);font-size:18px;max-width:520px;line-height:1.5;margin:18px 0 0}
-  .hint{margin-top:34px;display:flex;align-items:center;gap:12px;font-size:14px;color:var(--ink)}
-  .hint .mouse{width:22px;height:34px;border:2px solid var(--ink);border-radius:12px;position:relative}
-  .hint .mouse::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:7px;margin-left:-2px;background:var(--ink);border-radius:2px;animation:wheel 1.6s infinite}
+  /* ---------- Toma (video o foto a pantalla completa) ---------- */
+  .shot{position:relative;height:100svh;min-height:520px;overflow:hidden;scroll-snap-align:start;background:#050506;isolation:isolate}
+  .shot .blur{display:none}
+  .shot .frame{position:absolute;inset:0;overflow:hidden}
+  .shot video,.shot .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .shot .foto{transform-origin:var(--ox,50%) var(--oy,50%);transform:scale(1.02)}
+  .shot.on .foto{animation:kb 9s cubic-bezier(.25,.1,.25,1) forwards}
+  @keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(var(--z,1.18)) translate(var(--dx,0),var(--dy,0))}}
+  .shade{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to top,rgba(5,5,6,.88) 0%,rgba(5,5,6,.4) 30%,rgba(5,5,6,0) 55%),linear-gradient(to bottom,rgba(5,5,6,.5) 0%,rgba(5,5,6,0) 16%)}
+
+  .cap{position:absolute;left:20px;right:20px;bottom:calc(96px + env(safe-area-inset-bottom));max-width:540px;z-index:2;text-shadow:0 2px 22px rgba(0,0,0,.5)}
+  .cap > *{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .shot.on .cap > *{opacity:1;transform:none}
+  .shot.on .cap > :nth-child(2){transition-delay:.12s}
+  .shot.on .cap > :nth-child(3){transition-delay:.24s}
+  .shot.on .cap > :nth-child(4){transition-delay:.36s}
+  .cap .n{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--warm);margin-bottom:10px;font-weight:600}
+  .cap h2{font-size:clamp(36px,8vw,78px);line-height:1}
+  .cap p{font-size:17px;line-height:1.5;color:#ece6dd;margin:14px 0 0;max-width:30em}
+
+  /* Portada */
+  .hero .cap{top:calc(74px + env(safe-area-inset-top));bottom:auto}
+  .hero .shade{background:linear-gradient(to bottom,rgba(5,5,6,.82) 0%,rgba(5,5,6,.45) 34%,rgba(5,5,6,0) 56%),linear-gradient(to top,rgba(5,5,6,.55) 0%,rgba(5,5,6,0) 22%)}
+  .hero .tag{font-size:12px;color:var(--mute);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+  .hero h1{font-size:clamp(48px,12vw,124px);line-height:.94}
+  .hint{position:absolute;left:20px;bottom:calc(28px + env(safe-area-inset-bottom));z-index:2;display:flex;align-items:center;gap:12px;font-size:14px;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+  .hint i{width:22px;height:34px;border:2px solid var(--ink);border-radius:12px;position:relative}
+  .hint i::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:7px;margin-left:-2px;background:var(--ink);border-radius:2px;animation:wheel 1.6s infinite}
   @keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(12px)}}
 
-  /* ---------- Scroll tour ---------- */
-  .tour{position:relative;height:1250vh}
-  .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#050506}
-  .scene{position:absolute;inset:0;opacity:0;visibility:hidden}
-  .bg{display:none}
-  .frame{position:absolute;inset:0;overflow:hidden}
-  .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;will-change:transform;transform-origin:0 0}
-  .shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(5,5,6,.82) 0%,rgba(5,5,6,.35) 32%,rgba(5,5,6,0) 58%),linear-gradient(to bottom,rgba(5,5,6,.45) 0%,rgba(5,5,6,0) 18%)}
-  .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.5) 100%);z-index:2}
-
-  .cap{position:absolute;left:22px;right:22px;bottom:11vh;max-width:520px;opacity:0;will-change:opacity,translate;z-index:3;text-shadow:0 2px 20px rgba(0,0,0,.55)}
-  .cap .n{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#ffd2a8;margin-bottom:10px}
-  .cap h2{font-size:clamp(36px,7vw,76px);line-height:1}
-  .cap p{font-size:18px;line-height:1.5;color:#ece6dd;margin:14px 0 0;max-width:30em}
-
-  .chapters{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:5}
+  /* Capítulos */
+  .chapters{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:15;opacity:0;transition:opacity .4s;pointer-events:none}
+  .chapters.show{opacity:1}
   .chapters span{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;transition:color .3s}
   .chapters span::after{content:"";width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:all .3s}
   .chapters span.on{color:#fff}
   .chapters span.on::after{background:var(--accent);transform:scale(1.4)}
-  @media (max-width:640px){.chapters span{font-size:0;gap:0}}
-  .progress{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:5}
+  @media (max-width:700px){.chapters span{font-size:0;gap:0}}
+  .tiempo{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:3;opacity:.9}
 
-  /* Pantallas anchas: la toma va en un encuadre vertical de toda la altura, como un video de celular */
+  /* Pantallas anchas: el video vertical va en un encuadre de toda la altura, con el texto a la izquierda */
   @media (min-aspect-ratio:4/5){
-    .bg{display:block;position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(42px) brightness(.38) saturate(1.1)}
-    .frame{left:auto;right:max(9vw,150px);width:auto;height:100%;aspect-ratio:1080/1935;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 40px 120px rgba(0,0,0,.6)}
-    .shade{background:linear-gradient(to bottom,rgba(5,5,6,.35) 0%,rgba(5,5,6,0) 16%,rgba(5,5,6,0) 82%,rgba(5,5,6,.4) 100%)}
-    .cap{left:6vw;right:auto;bottom:auto;top:50%;transform:translateY(-50%);max-width:min(40vw,560px)}
+    .shot .blur{display:block;position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(48px) brightness(.32) saturate(1.15);z-index:-1}
+    .shot .frame{left:auto;right:max(9vw,140px);top:5vh;bottom:5vh;width:auto;aspect-ratio:9/16;border-radius:22px;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 50px 140px rgba(0,0,0,.65)}
+    .shade{background:linear-gradient(to bottom,rgba(5,5,6,.25) 0%,rgba(5,5,6,0) 14%,rgba(5,5,6,0) 86%,rgba(5,5,6,.3) 100%)}
+    .cap,.hero .cap{left:7vw;right:auto;bottom:auto;top:50%;transform:translateY(-50%);max-width:min(40vw,560px)}
+    .hero .shade{background:linear-gradient(to bottom,rgba(5,5,6,.25) 0%,rgba(5,5,6,0) 14%,rgba(5,5,6,0) 86%,rgba(5,5,6,.3) 100%)}
+    .hint{left:7vw;bottom:7vh}
+    .cap h2{font-size:clamp(36px,4.8vw,72px)}
+    .hero h1{font-size:clamp(48px,6.4vw,112px)}
   }
-  @media (min-aspect-ratio:4/5) and (max-width:1100px){.cap{max-width:34vw}.cap h2{font-size:clamp(34px,4.6vw,60px)}}
 
-  /* ---------- After tour ---------- */
-  section.block{max-width:1100px;margin:0 auto;padding:96px 22px}
+  /* ---------- Después del recorrido ---------- */
+  section.block{max-width:1100px;margin:0 auto;padding:96px 20px;scroll-snap-align:start}
   .kicker{color:#f0a35e;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-bottom:12px}
-  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:28px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:28px}
   .facts div{background:var(--bg);padding:26px 22px}
-  .facts b{display:block;font-family:"Space Grotesk";font-size:34px;font-weight:600}
+  .facts b{display:block;font-family:"Space Grotesk";font-size:32px;font-weight:600}
   .facts small{font-size:13px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
   .price{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:28px}
   .price div{border-top:1px solid #3a3b40;padding-top:16px}
@@ -85,15 +96,19 @@
   .final h2{font-size:clamp(40px,8vw,84px)}
   .final p{color:var(--mute);font-size:18px}
   .ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
-  .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:18px 28px;border-radius:999px;font-weight:600;font-size:17px;min-height:44px}
+  .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:17px 28px;border-radius:999px;font-weight:600;font-size:17px;min-height:44px}
   .btn.primary{background:var(--accent);color:#160c04}
   .btn.ghost{border:1px solid #5a5b60}
-  footer{border-top:1px solid var(--line);padding:26px 22px;color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;max-width:1100px;margin:0 auto}
+  .btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  footer{border-top:1px solid var(--line);padding:26px 20px;color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;max-width:1100px;margin:0 auto}
 
-  .float{position:fixed;right:16px;bottom:18px;z-index:30;opacity:0;transform:translateY(16px);transition:all .35s;pointer-events:none}
+  .float{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;opacity:0;transform:translateY(16px);transition:all .35s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
   .float.show{opacity:1;transform:none;pointer-events:auto}
 
-  @media (prefers-reduced-motion:reduce){.hint .mouse::after{animation:none}}
+  @media (prefers-reduced-motion:reduce){
+    .hint i::after,.shot.on .foto{animation:none}
+    .cap > *{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -106,163 +121,151 @@
   </div>
 </div>
 
-<!-- INTRO -->
-<header class="intro">
-  <div class="tag" data-venta="En venta · demo con datos de ejemplo" data-alquiler="En alquiler · demo con datos de ejemplo">En venta · demo con datos de ejemplo</div>
-  <h1>Pickup 4x4<br>Doble Cabina</h1>
-  <p data-venta="No te vamos a mandar una ficha técnica. Súbete." data-alquiler="Antes de reservarla, manéjala un rato. Súbete.">No te vamos a mandar una ficha técnica. Súbete.</p>
-  <div class="hint"><span class="mouse" aria-hidden="true"></span> Desliza para manejarla</div>
-</header>
-
-<!-- TOUR: una sola toma en 9 fotos, con cámara guiada por el scroll -->
-<div class="tour" id="tour">
-  <div class="stage">
-
-    <div class="scene" data-scene="0" data-chapter="afuera" data-cam='{"a": [1.35, 0.5, 0.18], "b": [1.5, 0.5, 0.56]}'>
-      <img class="bg" src="img/01-se-acerca.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/01-se-acerca.jpg" alt="La pickup gris acercándose por una carretera de curvas con el volcán al atardecer" fetchpriority="high">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">01 · Afuera</div>
-        <h2>Se ve venir desde lejos.</h2>
-        <p>Llantas todo terreno, faros LED y una presencia que se nota igual en la Escalón que en la calle de tierra a la finca.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="1" data-chapter="afuera" data-cam='{"a": [1.08, 0.5, 0.45], "b": [1.45, 0.62, 0.39]}'>
-      <img class="bg" src="img/02-frente.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/02-frente.jpg" alt="Frente de la pickup de cerca, con los faros LED encendidos" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">01 · Afuera</div>
-        <h2>De frente, sin pena.</h2>
-        <p>Parrilla cromada y faros LED que te traen de regreso de la playa aunque ya sea de noche.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="2" data-chapter="afuera" data-cam='{"a": [1.35, 0.28, 0.62], "b": [1.35, 0.85, 0.58]}'>
-      <img class="bg" src="img/03-lateral.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/03-lateral.jpg" alt="Lateral trasero de la pickup estacionada en la carretera, con el volcán al fondo" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">01 · Afuera</div>
-        <h2>Doble cabina, de verdad.</h2>
-        <p>Cuatro puertas, estribos laterales y rines con llantas que todavía tienen vida de sobra.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="3" data-chapter="adentro" data-cam='{"a": [1.05, 0.5, 0.5], "b": [1.6, 0.62, 0.58]}'>
-      <img class="bg" src="img/04-puerta.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/04-puerta.jpg" alt="Puerta del conductor abierta mostrando los asientos de cuero" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">02 · Adentro</div>
-        <h2>Abrí la puerta.</h2>
-        <p>Asientos de cuero y una entrada cómoda, aunque vengas con las manos llenas.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="4" data-chapter="adentro" data-cam='{"a": [1.35, 0.6, 0.75], "b": [1.12, 0.5, 0.3]}'>
-      <img class="bg" src="img/05-al-volante.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/05-al-volante.jpg" alt="Vista desde el asiento del conductor hacia la carretera y el volcán" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">02 · Adentro</div>
-        <h2>Ya estás al volante.</h2>
-        <p>Volante con controles, tablero digital y la carretera adelante. Así se siente manejarla.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="5" data-chapter="adentro" data-cam='{"a": [1.08, 0.5, 0.5], "b": [1.5, 0.38, 0.32]}'>
-      <img class="bg" src="img/06-tablero.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/06-tablero.jpg" alt="Tablero con la pantalla táctil mostrando un mapa y la palanca automática" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">02 · Adentro</div>
-        <h2>Todo en la pantalla.</h2>
-        <p>Apple CarPlay y Android Auto, cámara de retroceso y sensores de parqueo.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="6" data-chapter="adentro" data-cam='{"a": [1.3, 0.35, 0.65], "b": [1.3, 0.6, 0.32]}'>
-      <img class="bg" src="img/07-asientos-traseros.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/07-asientos-traseros.jpg" alt="Asientos traseros de cuero con la luz de la tarde entrando por la ventana" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">02 · Adentro</div>
-        <h2>Atrás también se viaja cómodo.</h2>
-        <p>Cinco adultos sin apretarse, con salidas de aire atrás para los viajes largos.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="7" data-chapter="atras" data-cam='{"a": [1.05, 0.5, 0.45], "b": [1.35, 0.5, 0.52]}'>
-      <img class="bg" src="img/08-palangana.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/08-palangana.jpg" alt="La pickup vista desde atrás, con la palangana, en la carretera hacia el volcán" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">03 · Atrás</div>
-        <h2>Cabe todo el paseo.</h2>
-        <p>Palangana con protector y cobertor. Las tablas, la hielera y los cinco adelante, rumbo al Tunco un sábado temprano.</p>
-      </div>
-    </div>
-
-    <div class="scene" data-scene="8" data-chapter="regreso" data-cam='{"a": [1.6, 0.65, 0.68], "b": [1.02, 0.5, 0.45]}'>
-      <img class="bg" src="img/09-se-va.jpg" alt="" aria-hidden="true" decoding="async">
-      <div class="frame">
-        <img class="foto" src="img/09-se-va.jpg" alt="La pickup alejándose por una curva de la carretera al atardecer, con el volcán de fondo" decoding="async">
-        <div class="shade"></div>
-      </div>
-      <div class="cap">
-        <div class="n">04 · De regreso</div>
-        <h2 data-venta="¿Te la llevas a casa?" data-alquiler="¿Para cuándo la quieres?">¿Te la llevas a casa?</h2>
-        <p data-venta="Un solo dueño, servicios en agencia y lista para traspaso." data-alquiler="Te la entregamos en el aeropuerto o donde estés, con seguro básico incluido.">Un solo dueño, servicios en agencia y lista para traspaso.</p>
-      </div>
-    </div>
-
-    <div class="vignette"></div>
-    <div class="chapters" aria-hidden="true">
-      <span data-chapter="afuera">Afuera</span><span data-chapter="adentro">Adentro</span><span data-chapter="atras">Atrás</span><span data-chapter="regreso">De regreso</span>
-    </div>
-    <div class="progress"></div>
-  </div>
+<div class="chapters" aria-hidden="true">
+  <span data-chapter="afuera">Afuera</span><span data-chapter="adentro">Adentro</span><span data-chapter="atras">Atrás</span><span data-chapter="regreso">De regreso</span>
 </div>
 
-<!-- DATOS -->
-<section class="block">
-  <div class="kicker">La ficha, para quien la pida</div>
-  <h2 style="font-size:clamp(32px,5vw,52px)">Lo importante, en cuatro números</h2>
-  <div class="facts" id="facts"></div>
-</section>
+<main>
+  <!-- PORTADA: la pickup llega -->
+  <section class="shot hero" data-chapter="afuera">
+    <img class="blur" src="video/01-se-acerca.jpg" alt="" aria-hidden="true">
+    <div class="frame">
+      <video data-src="video/01-se-acerca.mp4" poster="video/01-se-acerca.jpg" muted playsinline loop preload="auto" aria-label="La pickup gris se acerca por la carretera con el volcán al atardecer"></video>
+      <div class="shade"></div><div class="tiempo"></div>
+    </div>
+    <div class="cap">
+      <div class="tag" data-venta="En venta · demo con datos de ejemplo" data-alquiler="En alquiler · demo con datos de ejemplo">En venta · demo con datos de ejemplo</div>
+      <h1>Pickup 4x4<br>Doble Cabina</h1>
+      <p data-venta="No te vamos a mandar una ficha técnica. Súbete." data-alquiler="Antes de reservarla, manéjala un rato. Súbete.">No te vamos a mandar una ficha técnica. Súbete.</p>
+    </div>
+    <div class="hint"><i aria-hidden="true"></i> Desliza para el recorrido</div>
+  </section>
 
-<section class="block" style="padding-top:0">
-  <div class="kicker" data-venta="Precio y financiamiento" data-alquiler="Tarifas">Precio y financiamiento</div>
-  <div class="price" id="price"></div>
-</section>
+  <section class="shot" data-chapter="afuera">
+    <img class="blur" src="img/02-frente.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <img class="foto" src="img/02-frente.jpg" alt="Frente de la pickup de cerca, con los faros LED encendidos" loading="lazy" style="--ox:62%;--oy:40%;--z:1.22">
+      <div class="shade"></div>
+    </div>
+    <div class="cap">
+      <div class="n">01 · Afuera</div>
+      <h2>De frente, sin pena.</h2>
+      <p>Parrilla cromada y faros LED que te traen de regreso de la playa aunque ya sea de noche.</p>
+    </div>
+  </section>
 
-<section class="block final">
-  <h2 data-venta="¿La vemos en persona?" data-alquiler="Resérvala hoy">¿La vemos en persona?</h2>
-  <p>Te respondemos por WhatsApp. Sin formularios, sin vueltas.</p>
-  <div class="ctas">
-    <a class="btn primary wa" href="#" data-venta="Agendar prueba de manejo" data-alquiler="Reservar por WhatsApp">Agendar prueba de manejo</a>
-    <a class="btn ghost tel" href="#">Llamar</a>
-  </div>
-</section>
+  <section class="shot" data-chapter="afuera">
+    <img class="blur" src="video/03-lateral.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <video data-src="video/03-lateral.mp4" poster="video/03-lateral.jpg" muted playsinline loop preload="none" aria-label="La cámara acompaña de lado a la pickup en movimiento"></video>
+      <div class="shade"></div><div class="tiempo"></div>
+    </div>
+    <div class="cap">
+      <div class="n">01 · Afuera</div>
+      <h2>Doble cabina, de verdad.</h2>
+      <p>Cuatro puertas, estribos laterales y rines con llantas que todavía tienen vida de sobra.</p>
+    </div>
+  </section>
+
+  <section class="shot" data-chapter="adentro">
+    <img class="blur" src="video/04-puerta.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <video data-src="video/04-puerta.mp4" poster="video/04-puerta.jpg" muted playsinline loop preload="none" aria-label="La cámara entra por la puerta del conductor hasta el volante"></video>
+      <div class="shade"></div><div class="tiempo"></div>
+    </div>
+    <div class="cap">
+      <div class="n">02 · Adentro</div>
+      <h2>Abrí la puerta.</h2>
+      <p>Asientos de cuero y una entrada cómoda, aunque vengas con las manos llenas.</p>
+    </div>
+  </section>
+
+  <section class="shot" data-chapter="adentro">
+    <img class="blur" src="video/05-al-volante.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <video data-src="video/05-al-volante.mp4" poster="video/05-al-volante.jpg" muted playsinline loop preload="none" aria-label="Vista desde el asiento del conductor manejando por la carretera de montaña"></video>
+      <div class="shade"></div><div class="tiempo"></div>
+    </div>
+    <div class="cap">
+      <div class="n">02 · Adentro</div>
+      <h2>Ya estás al volante.</h2>
+      <p>Volante con controles, tablero digital y la carretera adelante. Así se siente manejarla.</p>
+    </div>
+  </section>
+
+  <section class="shot" data-chapter="adentro">
+    <img class="blur" src="img/06-tablero.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <img class="foto" src="img/06-tablero.jpg" alt="Tablero con la pantalla táctil mostrando un mapa y la palanca automática" loading="lazy" style="--ox:40%;--oy:38%;--z:1.25">
+      <div class="shade"></div>
+    </div>
+    <div class="cap">
+      <div class="n">02 · Adentro</div>
+      <h2>Todo en la pantalla.</h2>
+      <p>Apple CarPlay y Android Auto, cámara de retroceso y sensores de parqueo.</p>
+    </div>
+  </section>
+
+  <section class="shot" data-chapter="adentro">
+    <img class="blur" src="img/07-asientos-traseros.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <img class="foto" src="img/07-asientos-traseros.jpg" alt="Asientos traseros de cuero con la luz de la tarde entrando por la ventana" loading="lazy" style="--ox:30%;--oy:60%;--z:1.16;--dx:3%">
+      <div class="shade"></div>
+    </div>
+    <div class="cap">
+      <div class="n">02 · Adentro</div>
+      <h2>Atrás también se viaja cómodo.</h2>
+      <p>Cinco adultos sin apretarse, con salidas de aire atrás para los viajes largos.</p>
+    </div>
+  </section>
+
+  <section class="shot" data-chapter="atras">
+    <img class="blur" src="img/08-palangana.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <img class="foto" src="img/08-palangana.jpg" alt="La pickup vista desde atrás, con la palangana, en la carretera hacia el volcán" loading="lazy" style="--ox:50%;--oy:55%;--z:1.2">
+      <div class="shade"></div>
+    </div>
+    <div class="cap">
+      <div class="n">03 · Atrás</div>
+      <h2>Cabe todo el paseo.</h2>
+      <p>Palangana con protector y cobertor. Las tablas, la hielera y los cinco adelante, rumbo al Tunco un sábado temprano.</p>
+    </div>
+  </section>
+
+  <section class="shot" data-chapter="regreso">
+    <img class="blur" src="video/09-se-va.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="frame">
+      <video data-src="video/09-se-va.mp4" poster="video/09-se-va.jpg" muted playsinline loop preload="none" aria-label="La pickup se aleja por la carretera de curvas rumbo al volcán"></video>
+      <div class="shade"></div><div class="tiempo"></div>
+    </div>
+    <div class="cap">
+      <div class="n">04 · De regreso</div>
+      <h2 data-venta="¿Te la llevas a casa?" data-alquiler="¿Para cuándo la quieres?">¿Te la llevas a casa?</h2>
+      <p data-venta="Un solo dueño, servicios en agencia y lista para traspaso." data-alquiler="Te la entregamos en el aeropuerto o donde estés, con seguro básico incluido.">Un solo dueño, servicios en agencia y lista para traspaso.</p>
+    </div>
+  </section>
+
+  <!-- DATOS -->
+  <section class="block" id="datos">
+    <div class="kicker">La ficha, para quien la pida</div>
+    <h2 style="font-size:clamp(32px,5vw,52px)">Lo importante, en cuatro números</h2>
+    <div class="facts" id="facts"></div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="kicker" data-venta="Precio y financiamiento" data-alquiler="Tarifas">Precio y financiamiento</div>
+    <div class="price" id="price"></div>
+  </section>
+
+  <section class="block final">
+    <h2 data-venta="¿La vemos en persona?" data-alquiler="Resérvala hoy">¿La vemos en persona?</h2>
+    <p>Te respondemos por WhatsApp. Sin formularios, sin vueltas.</p>
+    <div class="ctas">
+      <a class="btn primary wa" href="#" data-venta="Agendar prueba de manejo" data-alquiler="Reservar por WhatsApp">Agendar prueba de manejo</a>
+      <a class="btn ghost tel" href="#">Llamar</a>
+    </div>
+  </section>
+</main>
 
 <footer>
   <span>Autos Volcán · San Salvador, El Salvador</span>
@@ -302,73 +305,67 @@
   document.querySelectorAll('[data-mode]').forEach(function(b){ b.addEventListener('click', function(){ setMode(b.dataset.mode); }); });
   setMode('venta');
 
-  // Precarga y decodifica las 9 tomas para que no aparezcan en negro al deslizar rápido
-  document.querySelectorAll('.scene img.foto').forEach(function(img){ var im = new Image(); im.src = img.currentSrc || img.src; if (im.decode) im.decode().catch(function(){}); });
-
-  // ====== Motor del recorrido: una cámara por escena, guiada por el scroll ======
-  var tour = document.getElementById('tour');
-  var scenes = [].slice.call(document.querySelectorAll('.scene'));
+  // ====== Recorrido: cada toma se reproduce sola al llegar y se pausa al salir ======
+  var shots = [].slice.call(document.querySelectorAll('.shot'));
   var chapters = [].slice.call(document.querySelectorAll('.chapters span'));
-  var bar = document.querySelector('.progress');
+  var chapBox = document.querySelector('.chapters');
   var floatBtn = document.querySelector('.float');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var n = scenes.length, F = 0.016;          // ancho del fundido entre tomas
-  var K = reduce ? 0.15 : 1;                 // con "reducir movimiento" la cámara apenas se mueve
-  var cams = scenes.map(function(s){ return JSON.parse(s.dataset.cam); });
-  var fotos = scenes.map(function(s){ return s.querySelector('.foto'); });
-  var fondos = scenes.map(function(s){ return s.querySelector('.bg'); });
-  var caps = scenes.map(function(s){ return s.querySelector('.cap'); });
-  function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
-  function lerp(a, b, t){ return a + (b - a) * t; }
-  function ease(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
-  var ancho = window.matchMedia('(min-aspect-ratio: 4/5)');
-  // Lleva el foco (fracción de la foto) al punto 'ancla' de la pantalla, sin dejar ver los bordes de la foto
-  function place(s, foco, ancla){ var t = (ancla - s * foco) * 100, min = (1 - s) * 100; return t > 0 ? 0 : t < min ? min : t; }
 
-  var target = 0, current = 0, running = false;
-  function measure(){
-    var rect = tour.getBoundingClientRect();
-    var total = tour.offsetHeight - window.innerHeight;
-    target = clamp(-rect.top / total);
-    floatBtn.classList.toggle('show', rect.top < -window.innerHeight * 0.5);
+  function load(v){ if (v && !v.src && v.dataset.src){ v.src = v.dataset.src; v.load(); } }
+  function play(v){ if (!v) return; load(v); var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+
+  // La portada arranca de una vez
+  var heroV = shots[0].querySelector('video');
+  load(heroV); if (!reduce) play(heroV);
+
+  // Carga anticipada: el video de la toma siguiente se baja antes de llegar
+  var cerca = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ load(e.target.querySelector('video')); cerca.unobserve(e.target); } });
+  }, { rootMargin: '120% 0px' });
+  shots.forEach(function(s){ cerca.observe(s); });
+
+  var visible = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var s = e.target, v = s.querySelector('video');
+      if (e.intersectionRatio >= 0.55){
+        if (!s.classList.contains('on')){
+          s.classList.add('on');
+          if (v){ try { v.currentTime = 0; } catch(_){} if (!reduce) play(v); }
+          chapters.forEach(function(ch){ ch.classList.toggle('on', ch.dataset.chapter === s.dataset.chapter); });
+        }
+      } else if (e.intersectionRatio < 0.2 && s.classList.contains('on')){
+        s.classList.remove('on');
+        if (v) v.pause();
+      }
+    });
+  }, { threshold: [0, 0.2, 0.55, 0.8] });
+  shots.forEach(function(s){ visible.observe(s); });
+  shots[0].classList.add('on');
+
+  // Barra de tiempo de cada video
+  document.querySelectorAll('.shot video').forEach(function(v){
+    var t = v.parentNode.querySelector('.tiempo');
+    v.addEventListener('timeupdate', function(){ if (v.duration) t.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'; });
+  });
+
+  // Capítulos y botón flotante
+  var tourEnd = shots[shots.length - 1];
+  function onScroll(){
+    var y = window.scrollY, h = window.innerHeight;
+    var finTour = tourEnd.offsetTop + tourEnd.offsetHeight;
+    chapBox.classList.toggle('show', y > h * 0.5 && y < finTour - h * 0.5);
+    floatBtn.classList.toggle('show', y > h * 0.8);
   }
-  function render(p){
-    bar.style.transform = 'scaleX(' + p + ')';
-    var activo = scenes[Math.min(n - 1, Math.floor(p * n))].dataset.chapter;
-    for (var i = 0; i < n; i++){
-      var s = scenes[i], a = i / n, b = (i + 1) / n;
-      var fin = i === 0 ? 1 : clamp((p - (a - F)) / (2 * F));
-      var fout = i === n - 1 ? 1 : clamp(((b + F) - p) / (2 * F));
-      var op = Math.min(fin, fout);
-      s.style.opacity = op;
-      s.style.visibility = op > 0 ? 'visible' : 'hidden';
-      if (op <= 0) continue;
-      // La cámara corre también durante el fundido, así el corte se siente como un solo plano
-      var t = clamp((p - (a - F)) / ((b - a) + 2 * F));
-      var e = ease(t), c = cams[i];
-      var sc = lerp(1 + (c.a[0] - 1) * K, 1 + (c.b[0] - 1) * K, e);
-      var fx = lerp(c.a[1], c.b[1], e), fy = lerp(c.a[2], c.b[2], e);
-      var tx = place(sc, fx, 0.5), ty = place(sc, fy, ancho.matches ? 0.5 : 0.38);
-      fotos[i].style.transform = 'translate(' + tx.toFixed(3) + '%,' + ty.toFixed(3) + '%) scale(' + sc.toFixed(4) + ')';
-      if (fondos[i]) fondos[i].style.transform = 'scale(' + (1 + (sc - 1) * 0.4).toFixed(4) + ')';
-      var tc = clamp((p - a) / (b - a));
-      var cv = Math.min(clamp((tc - .14) / .16), i === n - 1 ? 1 : clamp((.86 - tc) / .12));
-      caps[i].style.opacity = cv;
-      caps[i].style.translate = '0 ' + ((1 - cv) * 22).toFixed(1) + 'px';
-    }
-    chapters.forEach(function(ch){ ch.classList.toggle('on', ch.dataset.chapter === activo); });
-  }
-  // Inercia: la cámara sigue al dedo con suavidad en lugar de saltar con cada evento de scroll
-  function tick(){
-    current += (target - current) * (reduce ? 1 : 0.12);
-    if (Math.abs(target - current) < 0.00004) current = target;
-    render(current);
-    if (current !== target) requestAnimationFrame(tick); else running = false;
-  }
-  function onScroll(){ measure(); if (!running){ running = true; requestAnimationFrame(tick); } }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  measure(); current = target; render(current);
+  onScroll();
+
+  // Ahorro de batería: pausa todo si la pestaña se oculta
+  document.addEventListener('visibilitychange', function(){
+    var on = document.querySelector('.shot.on video');
+    if (document.hidden){ document.querySelectorAll('.shot video').forEach(function(v){ v.pause(); }); }
+    else if (on && !reduce) play(on);
+  });
 })();
 </script>
 </body>

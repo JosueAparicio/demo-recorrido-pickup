@@ -2,7 +2,7 @@
 
 Micrositio de demostración para concesionarios y rentadoras de carros en El Salvador: el carro se presenta como un recorrido en una sola página, de afuera hacia adentro, con modo **venta** y modo **alquiler**, precios y botón de WhatsApp.
 
-El recorrido es una sola toma en 9 fotos con movimiento de cámara guiado por el scroll (acercamientos, paneos y alejamientos, con inercia suave). Cada foto tiene su propio movimiento: el carro se acerca, el frente, el lateral, la puerta, al volante, el tablero, los asientos traseros, la palangana y el carro alejándose.
+El recorrido son 9 tomas a pantalla completa, una por pantalla al deslizar. Cinco son **video** (el carro se acerca, la cámara lo acompaña de lado, entra por la puerta, maneja al volante y lo ve alejarse) y se reproducen solas al llegar a cada toma. Las otras cuatro (frente, tablero, asientos traseros y palangana) son fotos con un movimiento de cámara lento. En pantallas anchas cada toma va en un encuadre vertical, con el texto a la izquierda.
 
 **Ver en vivo:** https://josueaparicio.github.io/demo-recorrido-pickup/
 
@@ -12,7 +12,8 @@ Todo está en `index.html`:
 
 - **WhatsApp:** cambiá `var WHATSAPP = '50370000000';` por el número del negocio, con código de país y sin `+` ni espacios.
 - **Precios y datos:** reemplazá los textos entre corchetes, como `[TU PRECIO]` o `[PRIMA]`.
-- **Fotos:** están en `img/`, numeradas en el orden del recorrido (`01-se-acerca.jpg` … `09-se-va.jpg`). Para otro carro, reemplazá cada foto por la toma equivalente con el mismo nombre: verticales, 1080 px de ancho y comprimidas a unos 200 KB. El movimiento de cámara de cada toma está en el atributo `data-cam` de su escena: `[escala, foco_x, foco_y]` al inicio (`a`) y al final (`b`) de la toma.
+- **Videos:** están en `video/` (`01-se-acerca.mp4`, `03-lateral.mp4`, `04-puerta.mp4`, `05-al-volante.mp4`, `09-se-va.mp4`), cada uno con su imagen de portada `.jpg` del mismo nombre. Son verticales 9:16, de 8 segundos, sin audio y de 1 a 1.4 MB cada uno. Para otro carro, reemplazalos con los mismos nombres. Los de esta demo se generaron con IA (Google Flow, Veo 3.1 Lite) a partir de las fotos.
+- **Fotos:** están en `img/`, verticales, de 1080 px de ancho. El acercamiento de cada foto se ajusta con `--ox`/`--oy` (punto hacia donde se acerca) y `--z` (cuánto) en su atributo `style`.
 - **Venta o alquiler:** los textos de cada modo están en los atributos `data-venta` y `data-alquiler`.
 
-Es un solo archivo HTML más la carpeta de fotos, sin dependencias: se abre con doble clic o se publica en cualquier hosting estático.
+Es un solo archivo HTML más las carpetas de fotos y videos, sin dependencias: se abre con doble clic o se publica en cualquier hosting estático.
