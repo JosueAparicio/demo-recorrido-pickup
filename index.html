@@ -5,88 +5,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0b0d">
 <title>Pickup 4x4 2023 — Recorrido</title>
-<meta name="description" content="Recorrido en video de una pickup 4x4 doble cabina 2023: desde afuera, al volante y de regreso. Demo de micrositio para concesionarios y rentadoras en El Salvador.">
+<meta name="description" content="Recorré la pickup 4x4 doble cabina 2023 con el scroll: afuera, el motor, la cabina y de regreso. Demo de micrositio para concesionarios y rentadoras en El Salvador.">
 <meta property="og:title" content="Pickup 4x4 2023 — Recorrido">
-<meta property="og:image" content="video/01-se-acerca.jpg">
-<link rel="preload" as="image" href="video/01-se-acerca.jpg">
+<meta property="og:image" content="frames/s1-poster.jpg">
+<link rel="preload" href="frames/manifest.json" as="fetch" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0b0b0d;--ink:#f4f1ec;--mute:#b5afa6;--line:#2a2b30;--accent:#e8833a;--warm:#ffd2a8}
+  :root{--bg:#0b0b0d;--ink:#f4f1ec;--mute:#b9b2a8;--line:#2a2b30;--accent:#e8833a;--warm:#ffd2a8;--cream:#f3efe8;--dark:#141416}
   *{box-sizing:border-box}
-  html{scroll-snap-type:y proximity}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  h1,h2{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em;margin:0}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em;margin:0}
 
   /* ---------- Barra ---------- */
-  .bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;pointer-events:none}
-  .bar > *{pointer-events:auto}
-  .brand{font-family:"Space Grotesk";font-weight:700;letter-spacing:.12em;font-size:15px;text-shadow:0 1px 12px rgba(0,0,0,.6)}
-  .mode{display:flex;background:rgba(20,20,24,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:4px}
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;pointer-events:none;background:linear-gradient(to bottom,rgba(5,5,6,.55),rgba(5,5,6,0))}
+  .nav > *{pointer-events:auto}
+  .brand{font-family:"Space Grotesk";font-weight:700;letter-spacing:.14em;font-size:14px}
+  .nav-r{display:flex;align-items:center;gap:10px}
+  .mode{display:flex;background:rgba(20,20,24,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:4px}
   .mode button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--mute)}
   .mode button[aria-pressed="true"]{background:var(--ink);color:#0b0b0d}
-  .mode button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .mode button:focus-visible,.btn:focus-visible,.chapters a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .nav-cta{display:none;text-decoration:none;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:9px 16px}
+  @media (min-width:900px){.nav-cta{display:inline-block}}
 
-  /* ---------- Toma (video o foto a pantalla completa) ---------- */
-  .shot{position:relative;height:100svh;min-height:520px;overflow:hidden;scroll-snap-align:start;background:#050506;isolation:isolate}
-  .shot .blur{display:none}
-  .shot .frame{position:absolute;inset:0;overflow:hidden}
-  .shot video,.shot .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-  .shot .foto{transform-origin:var(--ox,50%) var(--oy,50%);transform:scale(1.02)}
-  .shot.on .foto{animation:kb 9s cubic-bezier(.25,.1,.25,1) forwards}
-  @keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(var(--z,1.18)) translate(var(--dx,0),var(--dy,0))}}
-  .shade{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(to top,rgba(5,5,6,.88) 0%,rgba(5,5,6,.4) 30%,rgba(5,5,6,0) 55%),linear-gradient(to bottom,rgba(5,5,6,.5) 0%,rgba(5,5,6,0) 16%)}
+  /* ---------- Tramos con scroll ---------- */
+  .scrub{position:relative}
+  #scrub1{height:520vh} #scrub2{height:640vh} #scrub3{height:300vh}
+  html[data-tier="p"] #scrub1{height:420vh} html[data-tier="p"] #scrub2{height:520vh} html[data-tier="p"] #scrub3{height:260vh}
+  .sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#050506}
+  .sticky canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .6s ease}
+  .sticky canvas.ready{opacity:1}
+  .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.8)}
+  html[data-tier="d"] .poster{object-fit:contain;background:#0d0d0f}
+  .vig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(5,5,6,.85) 0%,rgba(5,5,6,.35) 28%,rgba(5,5,6,0) 50%),linear-gradient(to bottom,rgba(5,5,6,.45) 0%,rgba(5,5,6,0) 14%)}
+  html[data-tier="d"] .vig{background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.45) 100%)}
 
-  .cap{position:absolute;left:20px;right:20px;bottom:calc(96px + env(safe-area-inset-bottom));max-width:540px;z-index:2;text-shadow:0 2px 22px rgba(0,0,0,.5)}
-  .cap > *{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
-  .shot.on .cap > *{opacity:1;transform:none}
-  .shot.on .cap > :nth-child(2){transition-delay:.12s}
-  .shot.on .cap > :nth-child(3){transition-delay:.24s}
-  .shot.on .cap > :nth-child(4){transition-delay:.36s}
-  .cap .n{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--warm);margin-bottom:10px;font-weight:600}
-  .cap h2{font-size:clamp(36px,8vw,78px);line-height:1}
-  .cap p{font-size:17px;line-height:1.5;color:#ece6dd;margin:14px 0 0;max-width:30em}
-
-  /* Portada */
-  .hero .cap{top:calc(74px + env(safe-area-inset-top));bottom:auto}
-  .hero .shade{background:linear-gradient(to bottom,rgba(5,5,6,.82) 0%,rgba(5,5,6,.45) 34%,rgba(5,5,6,0) 56%),linear-gradient(to top,rgba(5,5,6,.55) 0%,rgba(5,5,6,0) 22%)}
-  .hero .tag{font-size:12px;color:var(--mute);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;font-weight:600}
-  .hero h1{font-size:clamp(48px,12vw,124px);line-height:.94}
-  .hint{position:absolute;left:20px;bottom:calc(28px + env(safe-area-inset-bottom));z-index:2;display:flex;align-items:center;gap:12px;font-size:14px;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+  .ov{position:absolute;z-index:3;opacity:0;visibility:hidden;transform:translateY(var(--dy,22px));text-shadow:0 2px 22px rgba(0,0,0,.5);will-change:opacity,transform}
+  .ov .n{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--warm);font-weight:600;margin-bottom:10px;display:block}
+  .ov h2{font-size:clamp(34px,3.6vw,58px);line-height:1.04}
+  .ov p{font-size:17px;line-height:1.55;color:#ece6dd;margin:12px 0 0}
+  .cap{left:20px;right:20px;bottom:calc(92px + env(safe-area-inset-bottom));max-width:520px}
+  .hero{left:20px;right:20px;top:calc(78px + env(safe-area-inset-top));max-width:640px}
+  .hero .tag{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:14px}
+  .hero h1{font-size:clamp(46px,12vw,118px);line-height:.94}
+  .hero p{font-size:18px;color:#ece6dd;margin-top:16px;max-width:30em}
+  .hint{position:absolute;left:20px;bottom:calc(26px + env(safe-area-inset-bottom));z-index:3;display:flex;align-items:center;gap:12px;font-size:14px;text-shadow:0 1px 10px rgba(0,0,0,.6)}
   .hint i{width:22px;height:34px;border:2px solid var(--ink);border-radius:12px;position:relative}
   .hint i::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:7px;margin-left:-2px;background:var(--ink);border-radius:2px;animation:wheel 1.6s infinite}
   @keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(12px)}}
+  .ov .btn{margin-top:22px;pointer-events:auto}
+  html[data-tier="p"] .hero-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(5,5,6,.7) 0%,rgba(5,5,6,.25) 32%,rgba(5,5,6,0) 50%)}
+
+  /* Pantalla horizontal: el video va al centro, los textos a los lados */
+  html[data-tier="d"] .cap{bottom:auto;top:50%;--y:-50%;transform:translateY(calc(-50% + var(--dy,22px)));max-width:min(27vw,440px)}
+  html[data-tier="d"] .cap.l{left:clamp(24px,5vw,96px);right:auto}
+  html[data-tier="d"] .cap.r{right:clamp(150px,10vw,220px);left:auto;text-align:right}
+  html[data-tier="d"] .hero{top:50%;transform:translateY(calc(-50% + var(--dy,0px)));left:clamp(24px,5vw,96px);max-width:min(28vw,460px)}
+  html[data-tier="d"] .hero h1{font-size:clamp(46px,5.2vw,96px)}
+  html[data-tier="d"] .hint{left:50%;transform:translateX(-50%)}
 
   /* Capítulos */
-  .chapters{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:15;opacity:0;transition:opacity .4s;pointer-events:none}
-  .chapters.show{opacity:1}
-  .chapters span{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;transition:color .3s}
-  .chapters span::after{content:"";width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:all .3s}
-  .chapters span.on{color:#fff}
-  .chapters span.on::after{background:var(--accent);transform:scale(1.4)}
-  @media (max-width:700px){.chapters span{font-size:0;gap:0}}
-  .tiempo{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:3;opacity:.9}
+  .chapters{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:30}
+  .chapters a{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .3s;min-height:24px;mix-blend-mode:difference}
+  .chapters a::after{content:"";width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);transition:all .3s}
+  .chapters a.on{color:#fff}
+  .chapters a.on::after{background:var(--accent);transform:scale(1.5)}
+  html[data-tier="p"] .chapters a{font-size:0;gap:0}
 
-  /* Pantallas anchas: el video vertical va en un encuadre de toda la altura, con el texto a la izquierda */
-  @media (min-aspect-ratio:4/5){
-    .shot .blur{display:block;position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(48px) brightness(.32) saturate(1.15);z-index:-1}
-    .shot .frame{left:auto;right:max(9vw,140px);top:5vh;bottom:5vh;width:auto;aspect-ratio:9/16;border-radius:22px;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 50px 140px rgba(0,0,0,.65)}
-    .shade{background:linear-gradient(to bottom,rgba(5,5,6,.25) 0%,rgba(5,5,6,0) 14%,rgba(5,5,6,0) 86%,rgba(5,5,6,.3) 100%)}
-    .cap,.hero .cap{left:7vw;right:auto;bottom:auto;top:50%;transform:translateY(-50%);max-width:min(40vw,560px)}
-    .hero .shade{background:linear-gradient(to bottom,rgba(5,5,6,.25) 0%,rgba(5,5,6,0) 14%,rgba(5,5,6,0) 86%,rgba(5,5,6,.3) 100%)}
-    .hint{left:7vw;bottom:7vh}
-    .cap h2{font-size:clamp(36px,4.8vw,72px)}
-    .hero h1{font-size:clamp(48px,6.4vw,112px)}
-  }
+  /* ---------- Bandas entre tramos ---------- */
+  .band{background:var(--cream);color:var(--dark);text-align:center;padding:96px 20px 88px}
+  .band .facts{display:flex;flex-wrap:wrap;justify-content:center;gap:28px 56px;margin:0 auto 64px;max-width:900px}
+  .band .facts div{display:flex;flex-direction:column;align-items:center}
+  .band .facts b{font-family:"Space Grotesk";font-size:clamp(34px,5vw,52px);font-weight:500}
+  .band .facts small{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#6a645c;margin-top:4px}
+  .band h2{font-size:clamp(38px,7vw,80px);line-height:1.02}
+  .band p{color:#5a554e;font-size:18px;margin:14px auto 0;max-width:34em}
+  .band .arrow{font-size:28px;margin-top:28px;color:#8a837a}
 
-  /* ---------- Después del recorrido ---------- */
-  section.block{max-width:1100px;margin:0 auto;padding:96px 20px;scroll-snap-align:start}
+  /* ---------- Ficha, precio y contacto ---------- */
+  section.block{max-width:1100px;margin:0 auto;padding:96px 20px}
   .kicker{color:#f0a35e;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-bottom:12px}
-  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:28px}
-  .facts div{background:var(--bg);padding:26px 22px}
-  .facts b{display:block;font-family:"Space Grotesk";font-size:32px;font-weight:600}
-  .facts small{font-size:13px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
   .price{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:28px}
   .price div{border-top:1px solid #3a3b40;padding-top:16px}
   .price small{display:block;font-size:13px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
@@ -99,172 +101,152 @@
   .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:17px 28px;border-radius:999px;font-weight:600;font-size:17px;min-height:44px}
   .btn.primary{background:var(--accent);color:#160c04}
   .btn.ghost{border:1px solid #5a5b60}
-  .btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   footer{border-top:1px solid var(--line);padding:26px 20px;color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;max-width:1100px;margin:0 auto}
-
-  .float{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;opacity:0;transform:translateY(16px);transition:all .35s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .float{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:35;opacity:0;transform:translateY(16px);transition:all .35s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
   .float.show{opacity:1;transform:none;pointer-events:auto}
+  html[data-tier="d"] .float{display:none}
 
-  @media (prefers-reduced-motion:reduce){
-    .hint i::after,.shot.on .foto{animation:none}
-    .cap > *{transition:none}
-  }
+  @media (prefers-reduced-motion:reduce){.hint i::after{animation:none}}
 </style>
+<script>
+  // Mismo criterio que main.js, antes de pintar, para que el alto de los tramos no salte
+  document.documentElement.setAttribute("data-tier", innerHeight > innerWidth * 1.2 ? "p" : "d");
+</script>
 </head>
 <body>
 
-<div class="bar">
+<header class="nav">
   <div class="brand">AUTOS VOLCÁN</div>
-  <div class="mode" role="group" aria-label="Tipo de anuncio">
-    <button type="button" data-mode="venta" aria-pressed="true">Venta</button>
-    <button type="button" data-mode="alquiler" aria-pressed="false">Alquiler</button>
+  <div class="nav-r">
+    <div class="mode" role="group" aria-label="Tipo de anuncio">
+      <button type="button" data-mode="venta" aria-pressed="true">Venta</button>
+      <button type="button" data-mode="alquiler" aria-pressed="false">Alquiler</button>
+    </div>
+    <a class="nav-cta wa" href="#" target="_blank" rel="noopener" data-venta="Prueba de manejo" data-alquiler="Reservar">Prueba de manejo</a>
   </div>
-</div>
+</header>
 
-<div class="chapters" aria-hidden="true">
-  <span data-chapter="afuera">Afuera</span><span data-chapter="adentro">Adentro</span><span data-chapter="atras">Atrás</span><span data-chapter="regreso">De regreso</span>
-</div>
+<nav class="chapters" aria-label="Partes del recorrido">
+  <a href="#scrub1" data-chapter="afuera">Afuera</a>
+  <a href="#scrub2" data-chapter="adentro">Motor y cabina</a>
+  <a href="#scrub3" data-chapter="regreso">De regreso</a>
+  <a href="#ficha" data-chapter="ficha">Precio</a>
+</nav>
 
 <main>
-  <!-- PORTADA: la pickup llega -->
-  <section class="shot hero" data-chapter="afuera">
-    <img class="blur" src="video/01-se-acerca.jpg" alt="" aria-hidden="true">
-    <div class="frame">
-      <video data-src="video/01-se-acerca.mp4" poster="video/01-se-acerca.jpg" muted playsinline loop preload="auto" aria-label="La pickup gris se acerca por la carretera con el volcán al atardecer"></video>
-      <div class="shade"></div><div class="tiempo"></div>
-    </div>
-    <div class="cap">
+<!-- ============ TRAMO 1 · AFUERA ============ -->
+<section class="scrub" id="scrub1" data-chapter="afuera" aria-label="Recorrido por afuera">
+  <div class="sticky">
+    <img class="poster" src="frames/s1-poster.jpg" alt="" aria-hidden="true">
+    <canvas aria-hidden="true"></canvas>
+    <div class="vig"></div><div class="hero-shade"></div>
+
+    <div class="ov hero" data-tramo="1" data-from="0" data-to="0.12" style="opacity:1;visibility:visible;--dy:0px">
       <div class="tag" data-venta="En venta · demo con datos de ejemplo" data-alquiler="En alquiler · demo con datos de ejemplo">En venta · demo con datos de ejemplo</div>
       <h1>Pickup 4x4<br>Doble Cabina</h1>
-      <p data-venta="No te vamos a mandar una ficha técnica. Súbete." data-alquiler="Antes de reservarla, manéjala un rato. Súbete.">No te vamos a mandar una ficha técnica. Súbete.</p>
+      <p data-venta="No te vamos a mandar una ficha técnica. Recorréla." data-alquiler="Antes de reservarla, recorréla completa.">No te vamos a mandar una ficha técnica. Recorréla.</p>
     </div>
-    <div class="hint"><i aria-hidden="true"></i> Desliza para el recorrido</div>
-  </section>
+    <div class="ov hint" data-tramo="1" data-from="0" data-to="0.06" style="opacity:1;visibility:visible;--dy:0px"><i aria-hidden="true"></i> Desliza para recorrerla</div>
 
-  <section class="shot" data-chapter="afuera">
-    <img class="blur" src="img/02-frente.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <img class="foto" src="img/02-frente.jpg" alt="Frente de la pickup de cerca, con los faros LED encendidos" loading="lazy" style="--ox:62%;--oy:40%;--z:1.22">
-      <div class="shade"></div>
+    <div class="ov cap l" data-tramo="1" data-from="0.17" data-to="0.37">
+      <span class="n">Afuera</span>
+      <h2>Se ve venir<br>desde lejos.</h2>
+      <p>Faros LED, llantas todo terreno y una presencia que se nota igual en la ciudad que en la calle de tierra a la finca.</p>
     </div>
-    <div class="cap">
-      <div class="n">01 · Afuera</div>
-      <h2>De frente, sin pena.</h2>
-      <p>Parrilla cromada y faros LED que te traen de regreso de la playa aunque ya sea de noche.</p>
-    </div>
-  </section>
-
-  <section class="shot" data-chapter="afuera">
-    <img class="blur" src="video/03-lateral.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <video data-src="video/03-lateral.mp4" poster="video/03-lateral.jpg" muted playsinline loop preload="none" aria-label="La cámara acompaña de lado a la pickup en movimiento"></video>
-      <div class="shade"></div><div class="tiempo"></div>
-    </div>
-    <div class="cap">
-      <div class="n">01 · Afuera</div>
-      <h2>Doble cabina, de verdad.</h2>
+    <div class="ov cap r" data-tramo="1" data-from="0.47" data-to="0.76">
+      <span class="n">Afuera</span>
+      <h2>Doble cabina,<br>de verdad.</h2>
       <p>Cuatro puertas, estribos laterales y rines con llantas que todavía tienen vida de sobra.</p>
     </div>
-  </section>
-
-  <section class="shot" data-chapter="adentro">
-    <img class="blur" src="video/04-puerta.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <video data-src="video/04-puerta.mp4" poster="video/04-puerta.jpg" muted playsinline loop preload="none" aria-label="La cámara entra por la puerta del conductor hasta el volante"></video>
-      <div class="shade"></div><div class="tiempo"></div>
+    <div class="ov cap l" data-tramo="1" data-from="0.86" data-to="0.99">
+      <span class="n">Atrás</span>
+      <h2>Cabe todo<br>el paseo.</h2>
+      <p>Palangana con protector y cobertor. Las tablas, la hielera y los cinco adelante, rumbo a la playa un sábado temprano.</p>
     </div>
-    <div class="cap">
-      <div class="n">02 · Adentro</div>
-      <h2>Abrí la puerta.</h2>
+  </div>
+</section>
+
+<!-- ============ BANDA ============ -->
+<section class="band">
+  <div class="facts"></div>
+  <h2>Abrimos el capó<br>y nos subimos</h2>
+  <p>El motor, la cabina y cada detalle, como si estuvieras ahí.</p>
+  <div class="arrow" aria-hidden="true">↓</div>
+</section>
+
+<!-- ============ TRAMO 2 · MOTOR Y CABINA ============ -->
+<section class="scrub" id="scrub2" data-chapter="adentro" aria-label="Recorrido por el motor y la cabina">
+  <div class="sticky">
+    <img class="poster" src="frames/s2-poster.jpg" alt="" aria-hidden="true" loading="lazy">
+    <canvas aria-hidden="true"></canvas>
+    <div class="vig"></div>
+    <div class="ov cap l" data-tramo="2" data-from="0.01" data-to="0.115">
+      <span class="n">Motor</span>
+      <h2>El motor,<br>a la vista.</h2>
+      <p>Servicios en agencia y sin fugas ni sorpresas. Tráete a tu mecánico de confianza y que lo revise.</p>
+    </div>
+    <div class="ov cap r" data-tramo="2" data-from="0.17" data-to="0.41">
+      <span class="n">Adentro</span>
+      <h2>Abrí<br>la puerta.</h2>
       <p>Asientos de cuero y una entrada cómoda, aunque vengas con las manos llenas.</p>
     </div>
-  </section>
-
-  <section class="shot" data-chapter="adentro">
-    <img class="blur" src="video/05-al-volante.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <video data-src="video/05-al-volante.mp4" poster="video/05-al-volante.jpg" muted playsinline loop preload="none" aria-label="Vista desde el asiento del conductor manejando por la carretera de montaña"></video>
-      <div class="shade"></div><div class="tiempo"></div>
-    </div>
-    <div class="cap">
-      <div class="n">02 · Adentro</div>
-      <h2>Ya estás al volante.</h2>
+    <div class="ov cap l" data-tramo="2" data-from="0.5" data-to="0.73">
+      <span class="n">Adentro</span>
+      <h2>Ya estás<br>al volante.</h2>
       <p>Volante con controles, tablero digital y la carretera adelante. Así se siente manejarla.</p>
     </div>
-  </section>
-
-  <section class="shot" data-chapter="adentro">
-    <img class="blur" src="img/06-tablero.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <img class="foto" src="img/06-tablero.jpg" alt="Tablero con la pantalla táctil mostrando un mapa y la palanca automática" loading="lazy" style="--ox:40%;--oy:38%;--z:1.25">
-      <div class="shade"></div>
-    </div>
-    <div class="cap">
-      <div class="n">02 · Adentro</div>
-      <h2>Todo en la pantalla.</h2>
+    <div class="ov cap r" data-tramo="2" data-from="0.78" data-to="0.865">
+      <span class="n">Adentro</span>
+      <h2>Todo en<br>la pantalla.</h2>
       <p>Apple CarPlay y Android Auto, cámara de retroceso y sensores de parqueo.</p>
     </div>
-  </section>
-
-  <section class="shot" data-chapter="adentro">
-    <img class="blur" src="img/07-asientos-traseros.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <img class="foto" src="img/07-asientos-traseros.jpg" alt="Asientos traseros de cuero con la luz de la tarde entrando por la ventana" loading="lazy" style="--ox:30%;--oy:60%;--z:1.16;--dx:3%">
-      <div class="shade"></div>
-    </div>
-    <div class="cap">
-      <div class="n">02 · Adentro</div>
-      <h2>Atrás también se viaja cómodo.</h2>
+    <div class="ov cap l" data-tramo="2" data-from="0.895" data-to="0.995">
+      <span class="n">Adentro</span>
+      <h2>Atrás también<br>se viaja cómodo.</h2>
       <p>Cinco adultos sin apretarse, con salidas de aire atrás para los viajes largos.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="shot" data-chapter="atras">
-    <img class="blur" src="img/08-palangana.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <img class="foto" src="img/08-palangana.jpg" alt="La pickup vista desde atrás, con la palangana, en la carretera hacia el volcán" loading="lazy" style="--ox:50%;--oy:55%;--z:1.2">
-      <div class="shade"></div>
-    </div>
-    <div class="cap">
-      <div class="n">03 · Atrás</div>
-      <h2>Cabe todo el paseo.</h2>
-      <p>Palangana con protector y cobertor. Las tablas, la hielera y los cinco adelante, rumbo al Tunco un sábado temprano.</p>
-    </div>
-  </section>
+<!-- ============ BANDA ============ -->
+<section class="band">
+  <h2 data-venta="¿Damos una vuelta?" data-alquiler="¿A dónde la llevas?">¿Damos una vuelta?</h2>
+  <p data-venta="Un solo dueño, servicios en agencia y lista para traspaso." data-alquiler="Te la entregamos en el aeropuerto o donde estés, con seguro básico incluido.">Un solo dueño, servicios en agencia y lista para traspaso.</p>
+  <div class="arrow" aria-hidden="true">↓</div>
+</section>
 
-  <section class="shot" data-chapter="regreso">
-    <img class="blur" src="video/09-se-va.jpg" alt="" aria-hidden="true" loading="lazy">
-    <div class="frame">
-      <video data-src="video/09-se-va.mp4" poster="video/09-se-va.jpg" muted playsinline loop preload="none" aria-label="La pickup se aleja por la carretera de curvas rumbo al volcán"></video>
-      <div class="shade"></div><div class="tiempo"></div>
+<!-- ============ TRAMO 3 · DE REGRESO ============ -->
+<section class="scrub" id="scrub3" data-chapter="regreso" aria-label="La pickup se aleja por la carretera">
+  <div class="sticky">
+    <img class="poster" src="frames/s3-poster.jpg" alt="" aria-hidden="true" loading="lazy">
+    <canvas aria-hidden="true"></canvas>
+    <div class="vig"></div>
+    <div class="ov cap l" data-tramo="3" data-from="0.06" data-to="0.42">
+      <span class="n">De regreso</span>
+      <h2>Así se ve<br>cuando es tuya.</h2>
     </div>
-    <div class="cap">
-      <div class="n">04 · De regreso</div>
+    <div class="ov cap r" data-tramo="3" data-from="0.55" data-to="0.7" data-keep>
       <h2 data-venta="¿Te la llevas a casa?" data-alquiler="¿Para cuándo la quieres?">¿Te la llevas a casa?</h2>
-      <p data-venta="Un solo dueño, servicios en agencia y lista para traspaso." data-alquiler="Te la entregamos en el aeropuerto o donde estés, con seguro básico incluido.">Un solo dueño, servicios en agencia y lista para traspaso.</p>
+      <a class="btn primary wa" href="#" target="_blank" rel="noopener" data-venta="Agendar prueba de manejo" data-alquiler="Reservar por WhatsApp">Agendar prueba de manejo</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- DATOS -->
-  <section class="block" id="datos">
-    <div class="kicker">La ficha, para quien la pida</div>
-    <h2 style="font-size:clamp(32px,5vw,52px)">Lo importante, en cuatro números</h2>
-    <div class="facts" id="facts"></div>
-  </section>
+<!-- ============ FICHA Y PRECIO ============ -->
+<section class="block" id="ficha" data-chapter="ficha">
+  <div class="kicker" data-venta="Precio y financiamiento" data-alquiler="Tarifas">Precio y financiamiento</div>
+  <h2 style="font-size:clamp(32px,5vw,52px)">Lo importante, claro</h2>
+  <div class="price" id="price"></div>
+</section>
 
-  <section class="block" style="padding-top:0">
-    <div class="kicker" data-venta="Precio y financiamiento" data-alquiler="Tarifas">Precio y financiamiento</div>
-    <div class="price" id="price"></div>
-  </section>
-
-  <section class="block final">
-    <h2 data-venta="¿La vemos en persona?" data-alquiler="Resérvala hoy">¿La vemos en persona?</h2>
-    <p>Te respondemos por WhatsApp. Sin formularios, sin vueltas.</p>
-    <div class="ctas">
-      <a class="btn primary wa" href="#" data-venta="Agendar prueba de manejo" data-alquiler="Reservar por WhatsApp">Agendar prueba de manejo</a>
-      <a class="btn ghost tel" href="#">Llamar</a>
-    </div>
-  </section>
+<section class="block final">
+  <h2 data-venta="¿La vemos en persona?" data-alquiler="Resérvala hoy">¿La vemos en persona?</h2>
+  <p>Te respondemos por WhatsApp. Sin formularios, sin vueltas.</p>
+  <div class="ctas">
+    <a class="btn primary wa" href="#" target="_blank" rel="noopener" data-venta="Agendar prueba de manejo" data-alquiler="Reservar por WhatsApp">Agendar prueba de manejo</a>
+    <a class="btn ghost tel" href="#">Llamar</a>
+  </div>
+</section>
 </main>
 
 <footer>
@@ -272,101 +254,9 @@
   <span>Marca, carro y datos de ejemplo · demo</span>
 </footer>
 
-<a class="btn primary wa float" href="#" data-venta="Prueba de manejo" data-alquiler="Reservar">Prueba de manejo</a>
+<a class="btn primary wa float" href="#" target="_blank" rel="noopener" data-venta="Prueba de manejo" data-alquiler="Reservar">Prueba de manejo</a>
 
-<script>
-(function(){
-  // ====== CONFIG: cambia esto por cliente ======
-  var WHATSAPP = '50370000000';           // número del concesionario, sin + ni espacios
-  var CARRO = 'la Pickup 4x4 2023';
-  var DATA = {
-    venta: {
-      msg: 'Hola, me interesa ' + CARRO + '. Quiero agendar una prueba de manejo.',
-      facts: [['2023','Año'],['28,000','Kilómetros'],['Automática','Transmisión'],['4x4','Tracción']],
-      price: [['Precio de contado','[TU PRECIO]','Negociable'],['Prima desde','[PRIMA]','Con banco aliado'],['Cuota estimada','[CUOTA]/mes','Sujeto a aprobación']]
-    },
-    alquiler: {
-      msg: 'Hola, quiero reservar ' + CARRO + '. ¿Qué fechas tienen disponibles?',
-      facts: [['5','Pasajeros'],['4x4','Tracción'],['Incluido','Seguro básico'],['Ilimitado','Kilometraje']],
-      price: [['Por día','[TARIFA]','Mínimo 2 días'],['Por semana','[TARIFA]','Ideal para vacaciones'],['Por mes','[TARIFA]','Empresas y estadías largas']]
-    }
-  };
-  // =============================================
-
-  function setMode(m){
-    var d = DATA[m];
-    document.querySelectorAll('[data-mode]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.mode===m); });
-    document.querySelectorAll('[data-venta]').forEach(function(el){ el.textContent = el.dataset[m]; });
-    document.querySelectorAll('a.wa').forEach(function(a){ a.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(d.msg); });
-    document.querySelectorAll('a.tel').forEach(function(a){ a.href = 'tel:+' + WHATSAPP; a.textContent = 'Llamar +' + WHATSAPP.slice(0,3) + ' ' + WHATSAPP.slice(3,7) + '-' + WHATSAPP.slice(7); });
-    document.getElementById('facts').innerHTML = d.facts.map(function(f){ return '<div><b>'+f[0]+'</b><small>'+f[1]+'</small></div>'; }).join('');
-    document.getElementById('price').innerHTML = d.price.map(function(p){ return '<div><small>'+p[0]+'</small><b>'+p[1]+'</b><span>'+p[2]+'</span></div>'; }).join('');
-  }
-  document.querySelectorAll('[data-mode]').forEach(function(b){ b.addEventListener('click', function(){ setMode(b.dataset.mode); }); });
-  setMode('venta');
-
-  // ====== Recorrido: cada toma se reproduce sola al llegar y se pausa al salir ======
-  var shots = [].slice.call(document.querySelectorAll('.shot'));
-  var chapters = [].slice.call(document.querySelectorAll('.chapters span'));
-  var chapBox = document.querySelector('.chapters');
-  var floatBtn = document.querySelector('.float');
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function load(v){ if (v && !v.src && v.dataset.src){ v.src = v.dataset.src; v.load(); } }
-  function play(v){ if (!v) return; load(v); var p = v.play(); if (p && p.catch) p.catch(function(){}); }
-
-  // La portada arranca de una vez
-  var heroV = shots[0].querySelector('video');
-  load(heroV); if (!reduce) play(heroV);
-
-  // Carga anticipada: el video de la toma siguiente se baja antes de llegar
-  var cerca = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if (e.isIntersecting){ load(e.target.querySelector('video')); cerca.unobserve(e.target); } });
-  }, { rootMargin: '120% 0px' });
-  shots.forEach(function(s){ cerca.observe(s); });
-
-  var visible = new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      var s = e.target, v = s.querySelector('video');
-      if (e.intersectionRatio >= 0.55){
-        if (!s.classList.contains('on')){
-          s.classList.add('on');
-          if (v){ try { v.currentTime = 0; } catch(_){} if (!reduce) play(v); }
-          chapters.forEach(function(ch){ ch.classList.toggle('on', ch.dataset.chapter === s.dataset.chapter); });
-        }
-      } else if (e.intersectionRatio < 0.2 && s.classList.contains('on')){
-        s.classList.remove('on');
-        if (v) v.pause();
-      }
-    });
-  }, { threshold: [0, 0.2, 0.55, 0.8] });
-  shots.forEach(function(s){ visible.observe(s); });
-  shots[0].classList.add('on');
-
-  // Barra de tiempo de cada video
-  document.querySelectorAll('.shot video').forEach(function(v){
-    var t = v.parentNode.querySelector('.tiempo');
-    v.addEventListener('timeupdate', function(){ if (v.duration) t.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'; });
-  });
-
-  // Capítulos y botón flotante
-  var tourEnd = shots[shots.length - 1];
-  function onScroll(){
-    var y = window.scrollY, h = window.innerHeight;
-    var finTour = tourEnd.offsetTop + tourEnd.offsetHeight;
-    chapBox.classList.toggle('show', y > h * 0.5 && y < finTour - h * 0.5);
-    floatBtn.classList.toggle('show', y > h * 0.8);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // Ahorro de batería: pausa todo si la pestaña se oculta
-  document.addEventListener('visibilitychange', function(){
-    var on = document.querySelector('.shot.on video');
-    if (document.hidden){ document.querySelectorAll('.shot video').forEach(function(v){ v.pause(); }); }
-    else if (on && !reduce) play(on);
-  });
-})();
-</script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
