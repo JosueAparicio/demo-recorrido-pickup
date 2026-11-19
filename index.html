@@ -6,7 +6,9 @@
 <meta name="theme-color" content="#0b0b0d">
 <title>Pickup 4x4 2023 — Recorrido</title>
 <meta name="description" content="Recorrido de una pickup 4x4 doble cabina 2023: desde afuera, al volante y de regreso. Demo de micrositio para concesionarios y rentadoras en El Salvador.">
+<meta property="og:title" content="Pickup 4x4 2023 — Recorrido">
 <meta property="og:image" content="img/01-se-acerca.jpg">
+<link rel="preload" as="image" href="img/01-se-acerca.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +27,8 @@
   .mode button[aria-pressed="true"]{background:var(--ink);color:#0b0b0d}
 
   /* ---------- Intro ---------- */
-  .intro{height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 22px 12vh;position:relative;overflow:hidden;background:radial-gradient(120% 80% at 50% 100%,#2a1a14 0%,#0b0b0d 60%)}
+  .intro{height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 22px 12vh;position:relative;overflow:hidden;background:linear-gradient(to top,#0b0b0d 8%,rgba(11,11,13,.72) 42%,rgba(11,11,13,.25) 100%),url(img/01-se-acerca.jpg) 50% 30%/cover no-repeat}
+  @media (min-aspect-ratio:4/5){.intro{padding-left:6vw;background:linear-gradient(to right,#0b0b0d 18%,rgba(11,11,13,.55) 60%,rgba(11,11,13,.35) 100%),url(img/01-se-acerca.jpg) 50% 38%/cover no-repeat}}
   .intro .tag{font-size:13px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
   .intro h1{font-size:clamp(46px,11vw,120px);line-height:.95}
   .intro p{color:var(--mute);font-size:18px;max-width:520px;line-height:1.5;margin:18px 0 0}
@@ -35,23 +38,19 @@
   @keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(12px)}}
 
   /* ---------- Scroll tour ---------- */
-  .tour{position:relative;height:1100vh}
-  .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#000}
-  .scene{position:absolute;inset:0;opacity:0;will-change:opacity}
-  .layer{position:absolute;inset:-2%;width:104%;height:104%;will-change:transform;transform-origin:50% 60%}
-  .layer img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
-  .layer .fondo{display:none}
-  @media (min-aspect-ratio:4/5){
-    .layer .fondo{display:block;filter:blur(38px) brightness(.45);transform:scale(1.15)}
-    .layer .foto{object-fit:contain;object-position:78% 50%}
-  }
-  .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.65) 100%)}
-  .flash{position:absolute;inset:0;background:#fff6e0;opacity:0;pointer-events:none}
+  .tour{position:relative;height:1250vh}
+  .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#050506}
+  .scene{position:absolute;inset:0;opacity:0;visibility:hidden}
+  .bg{display:none}
+  .frame{position:absolute;inset:0;overflow:hidden}
+  .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;will-change:transform;transform-origin:0 0}
+  .shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(5,5,6,.82) 0%,rgba(5,5,6,.35) 32%,rgba(5,5,6,0) 58%),linear-gradient(to bottom,rgba(5,5,6,.45) 0%,rgba(5,5,6,0) 18%)}
+  .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.5) 100%);z-index:2}
 
-  .cap{position:absolute;left:22px;right:22px;bottom:12vh;max-width:520px;opacity:0;will-change:opacity,translate;text-shadow:0 2px 24px rgba(0,0,0,.7)}
+  .cap{position:absolute;left:22px;right:22px;bottom:11vh;max-width:520px;opacity:0;will-change:opacity,translate;z-index:3;text-shadow:0 2px 20px rgba(0,0,0,.55)}
   .cap .n{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#ffd2a8;margin-bottom:10px}
-  .cap h2{font-size:clamp(36px,7vw,72px);line-height:1}
-  .cap p{font-size:18px;line-height:1.5;color:#ece6dd;margin:14px 0 0}
+  .cap h2{font-size:clamp(36px,7vw,76px);line-height:1}
+  .cap p{font-size:18px;line-height:1.5;color:#ece6dd;margin:14px 0 0;max-width:30em}
 
   .chapters{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:5}
   .chapters span{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;transition:color .3s}
@@ -59,8 +58,16 @@
   .chapters span.on{color:#fff}
   .chapters span.on::after{background:var(--accent);transform:scale(1.4)}
   @media (max-width:640px){.chapters span{font-size:0;gap:0}}
-  @media (min-aspect-ratio:4/5){.cap{left:6vw;bottom:auto;top:50%;transform:translateY(-50%)}}
-  .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);width:0;z-index:5}
+  .progress{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:5}
+
+  /* Pantallas anchas: la toma va en un encuadre vertical de toda la altura, como un video de celular */
+  @media (min-aspect-ratio:4/5){
+    .bg{display:block;position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(42px) brightness(.38) saturate(1.1)}
+    .frame{left:auto;right:max(9vw,150px);width:auto;height:100%;aspect-ratio:1080/1935;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 40px 120px rgba(0,0,0,.6)}
+    .shade{background:linear-gradient(to bottom,rgba(5,5,6,.35) 0%,rgba(5,5,6,0) 16%,rgba(5,5,6,0) 82%,rgba(5,5,6,.4) 100%)}
+    .cap{left:6vw;right:auto;bottom:auto;top:50%;transform:translateY(-50%);max-width:min(40vw,560px)}
+  }
+  @media (min-aspect-ratio:4/5) and (max-width:1100px){.cap{max-width:34vw}.cap h2{font-size:clamp(34px,4.6vw,60px)}}
 
   /* ---------- After tour ---------- */
   section.block{max-width:1100px;margin:0 auto;padding:96px 22px}
@@ -107,16 +114,16 @@
   <div class="hint"><span class="mouse" aria-hidden="true"></span> Desliza para manejarla</div>
 </header>
 
-<!-- TOUR: una sola toma, 9 fotos -->
+<!-- TOUR: una sola toma en 9 fotos, con cámara guiada por el scroll -->
 <div class="tour" id="tour">
   <div class="stage">
 
-    <div class="scene" data-scene="0" data-chapter="afuera">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/01-se-acerca.jpg" alt="" aria-hidden="true" fetchpriority="high">
+    <div class="scene" data-scene="0" data-chapter="afuera" data-cam='{"a": [1.35, 0.5, 0.18], "b": [1.5, 0.5, 0.56]}'>
+      <img class="bg" src="img/01-se-acerca.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/01-se-acerca.jpg" alt="La pickup gris acercándose por una carretera de curvas con el volcán al atardecer" fetchpriority="high">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">01 · Afuera</div>
         <h2>Se ve venir desde lejos.</h2>
@@ -124,12 +131,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="1" data-chapter="afuera">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/02-frente.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="1" data-chapter="afuera" data-cam='{"a": [1.08, 0.5, 0.45], "b": [1.45, 0.62, 0.39]}'>
+      <img class="bg" src="img/02-frente.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/02-frente.jpg" alt="Frente de la pickup de cerca, con los faros LED encendidos" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">01 · Afuera</div>
         <h2>De frente, sin pena.</h2>
@@ -137,12 +144,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="2" data-chapter="afuera">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/03-lateral.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="2" data-chapter="afuera" data-cam='{"a": [1.35, 0.28, 0.62], "b": [1.35, 0.85, 0.58]}'>
+      <img class="bg" src="img/03-lateral.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/03-lateral.jpg" alt="Lateral trasero de la pickup estacionada en la carretera, con el volcán al fondo" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">01 · Afuera</div>
         <h2>Doble cabina, de verdad.</h2>
@@ -150,12 +157,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="3" data-chapter="adentro">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/04-puerta.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="3" data-chapter="adentro" data-cam='{"a": [1.05, 0.5, 0.5], "b": [1.6, 0.62, 0.58]}'>
+      <img class="bg" src="img/04-puerta.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/04-puerta.jpg" alt="Puerta del conductor abierta mostrando los asientos de cuero" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">02 · Adentro</div>
         <h2>Abrí la puerta.</h2>
@@ -163,12 +170,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="4" data-chapter="adentro">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/05-al-volante.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="4" data-chapter="adentro" data-cam='{"a": [1.35, 0.6, 0.75], "b": [1.12, 0.5, 0.3]}'>
+      <img class="bg" src="img/05-al-volante.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/05-al-volante.jpg" alt="Vista desde el asiento del conductor hacia la carretera y el volcán" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">02 · Adentro</div>
         <h2>Ya estás al volante.</h2>
@@ -176,12 +183,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="5" data-chapter="adentro">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/06-tablero.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="5" data-chapter="adentro" data-cam='{"a": [1.08, 0.5, 0.5], "b": [1.5, 0.38, 0.32]}'>
+      <img class="bg" src="img/06-tablero.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/06-tablero.jpg" alt="Tablero con la pantalla táctil mostrando un mapa y la palanca automática" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">02 · Adentro</div>
         <h2>Todo en la pantalla.</h2>
@@ -189,12 +196,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="6" data-chapter="adentro">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/07-asientos-traseros.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="6" data-chapter="adentro" data-cam='{"a": [1.3, 0.35, 0.65], "b": [1.3, 0.6, 0.32]}'>
+      <img class="bg" src="img/07-asientos-traseros.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/07-asientos-traseros.jpg" alt="Asientos traseros de cuero con la luz de la tarde entrando por la ventana" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">02 · Adentro</div>
         <h2>Atrás también se viaja cómodo.</h2>
@@ -202,12 +209,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="7" data-chapter="atras">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/08-palangana.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="7" data-chapter="atras" data-cam='{"a": [1.05, 0.5, 0.45], "b": [1.35, 0.5, 0.52]}'>
+      <img class="bg" src="img/08-palangana.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/08-palangana.jpg" alt="La pickup vista desde atrás, con la palangana, en la carretera hacia el volcán" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">03 · Atrás</div>
         <h2>Cabe todo el paseo.</h2>
@@ -215,12 +222,12 @@
       </div>
     </div>
 
-    <div class="scene" data-scene="8" data-chapter="regreso">
-      <div class="layer" data-depth="0.07">
-        <img class="fondo" src="img/09-se-va.jpg" alt="" aria-hidden="true" decoding="async">
+    <div class="scene" data-scene="8" data-chapter="regreso" data-cam='{"a": [1.6, 0.65, 0.68], "b": [1.02, 0.5, 0.45]}'>
+      <img class="bg" src="img/09-se-va.jpg" alt="" aria-hidden="true" decoding="async">
+      <div class="frame">
         <img class="foto" src="img/09-se-va.jpg" alt="La pickup alejándose por una curva de la carretera al atardecer, con el volcán de fondo" decoding="async">
+        <div class="shade"></div>
       </div>
-      <div class="vignette"></div>
       <div class="cap">
         <div class="n">04 · De regreso</div>
         <h2 data-venta="¿Te la llevas a casa?" data-alquiler="¿Para cuándo la quieres?">¿Te la llevas a casa?</h2>
@@ -228,6 +235,7 @@
       </div>
     </div>
 
+    <div class="vignette"></div>
     <div class="chapters" aria-hidden="true">
       <span data-chapter="afuera">Afuera</span><span data-chapter="adentro">Adentro</span><span data-chapter="atras">Atrás</span><span data-chapter="regreso">De regreso</span>
     </div>
@@ -294,59 +302,73 @@
   document.querySelectorAll('[data-mode]').forEach(function(b){ b.addEventListener('click', function(){ setMode(b.dataset.mode); }); });
   setMode('venta');
 
-  // Precarga y decodifica todas las fotos del recorrido para que no aparezcan en negro al deslizar rápido
-  document.querySelectorAll(".scene img.foto").forEach(function(img){ var im = new Image(); im.src = img.currentSrc || img.src; if (im.decode) im.decode().catch(function(){}); });
+  // Precarga y decodifica las 9 tomas para que no aparezcan en negro al deslizar rápido
+  document.querySelectorAll('.scene img.foto').forEach(function(img){ var im = new Image(); im.src = img.currentSrc || img.src; if (im.decode) im.decode().catch(function(){}); });
 
-  // ====== Motor del recorrido ======
+  // ====== Motor del recorrido: una cámara por escena, guiada por el scroll ======
   var tour = document.getElementById('tour');
   var scenes = [].slice.call(document.querySelectorAll('.scene'));
   var chapters = [].slice.call(document.querySelectorAll('.chapters span'));
   var bar = document.querySelector('.progress');
   var floatBtn = document.querySelector('.float');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var n = scenes.length, F = 0.022; // ancho del fundido entre escenas
+  var n = scenes.length, F = 0.016;          // ancho del fundido entre tomas
+  var K = reduce ? 0.15 : 1;                 // con "reducir movimiento" la cámara apenas se mueve
+  var cams = scenes.map(function(s){ return JSON.parse(s.dataset.cam); });
+  var fotos = scenes.map(function(s){ return s.querySelector('.foto'); });
+  var fondos = scenes.map(function(s){ return s.querySelector('.bg'); });
+  var caps = scenes.map(function(s){ return s.querySelector('.cap'); });
   function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
-  function ease(t){ return t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+  function lerp(a, b, t){ return a + (b - a) * t; }
+  function ease(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
+  var ancho = window.matchMedia('(min-aspect-ratio: 4/5)');
+  // Lleva el foco (fracción de la foto) al punto 'ancla' de la pantalla, sin dejar ver los bordes de la foto
+  function place(s, foco, ancla){ var t = (ancla - s * foco) * 100, min = (1 - s) * 100; return t > 0 ? 0 : t < min ? min : t; }
 
-  var ticking = false;
-  function update(){
-    ticking = false;
+  var target = 0, current = 0, running = false;
+  function measure(){
     var rect = tour.getBoundingClientRect();
     var total = tour.offsetHeight - window.innerHeight;
-    var p = clamp(-rect.top / total);
-    bar.style.width = (p*100) + '%';
-    floatBtn.classList.toggle('show', rect.top < -window.innerHeight*0.5);
-
-    scenes.forEach(function(s, i){
-      var a = i / n, b = (i + 1) / n;
-      var fin = i === 0 ? 1 : clamp((p - (a - F)) / (2*F));
-      var fout = i === n-1 ? 1 : clamp(((b + F) - p) / (2*F));
+    target = clamp(-rect.top / total);
+    floatBtn.classList.toggle('show', rect.top < -window.innerHeight * 0.5);
+  }
+  function render(p){
+    bar.style.transform = 'scaleX(' + p + ')';
+    var activo = scenes[Math.min(n - 1, Math.floor(p * n))].dataset.chapter;
+    for (var i = 0; i < n; i++){
+      var s = scenes[i], a = i / n, b = (i + 1) / n;
+      var fin = i === 0 ? 1 : clamp((p - (a - F)) / (2 * F));
+      var fout = i === n - 1 ? 1 : clamp(((b + F) - p) / (2 * F));
       var op = Math.min(fin, fout);
       s.style.opacity = op;
       s.style.visibility = op > 0 ? 'visible' : 'hidden';
-      var t = clamp((p - a) / (b - a));
-      var te = ease(t);
-      if (op > 0) {
-        s.querySelectorAll('.layer').forEach(function(l){
-          var d = parseFloat(l.dataset.depth || 0) * (reduce ? 0.15 : 1);
-          var y = parseFloat(l.dataset.y || 0) * te;
-          l.style.transform = 'translate3d(0,' + y + 'px,0) scale(' + (1 + d*te) + ')';
-        });
-        s.querySelectorAll('.dash').forEach(function(dl){ dl.style.strokeDashoffset = (-t * 1400) + ''; });
-        var beams = s.querySelector('.beams'); if (beams) beams.style.opacity = .4 + .6*clamp((t-.5)/.4);
-        var flash = s.querySelector('[data-flash]'); if (flash) flash.style.opacity = clamp((t-.86)/.14) * .9;
-        var cap = s.querySelector('.cap');
-        var c = Math.min(clamp((t - .12) / .15), i === n-1 ? 1 : clamp((.88 - t) / .12));
-        cap.style.opacity = c;
-        cap.style.translate = '0 ' + ((1-c)*24) + 'px';
-      }
-      if ((p >= a && p < b) || (i === n-1 && p >= 1)) chapters.forEach(function(c){ c.classList.toggle('on', c.dataset.chapter === s.dataset.chapter); });
-    });
+      if (op <= 0) continue;
+      // La cámara corre también durante el fundido, así el corte se siente como un solo plano
+      var t = clamp((p - (a - F)) / ((b - a) + 2 * F));
+      var e = ease(t), c = cams[i];
+      var sc = lerp(1 + (c.a[0] - 1) * K, 1 + (c.b[0] - 1) * K, e);
+      var fx = lerp(c.a[1], c.b[1], e), fy = lerp(c.a[2], c.b[2], e);
+      var tx = place(sc, fx, 0.5), ty = place(sc, fy, ancho.matches ? 0.5 : 0.38);
+      fotos[i].style.transform = 'translate(' + tx.toFixed(3) + '%,' + ty.toFixed(3) + '%) scale(' + sc.toFixed(4) + ')';
+      if (fondos[i]) fondos[i].style.transform = 'scale(' + (1 + (sc - 1) * 0.4).toFixed(4) + ')';
+      var tc = clamp((p - a) / (b - a));
+      var cv = Math.min(clamp((tc - .14) / .16), i === n - 1 ? 1 : clamp((.86 - tc) / .12));
+      caps[i].style.opacity = cv;
+      caps[i].style.translate = '0 ' + ((1 - cv) * 22).toFixed(1) + 'px';
+    }
+    chapters.forEach(function(ch){ ch.classList.toggle('on', ch.dataset.chapter === activo); });
   }
-  function onScroll(){ if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  // Inercia: la cámara sigue al dedo con suavidad en lugar de saltar con cada evento de scroll
+  function tick(){
+    current += (target - current) * (reduce ? 1 : 0.12);
+    if (Math.abs(target - current) < 0.00004) current = target;
+    render(current);
+    if (current !== target) requestAnimationFrame(tick); else running = false;
+  }
+  function onScroll(){ measure(); if (!running){ running = true; requestAnimationFrame(tick); } }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
-  update();
+  measure(); current = target; render(current);
 })();
 </script>
 </body>
